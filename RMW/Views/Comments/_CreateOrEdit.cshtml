@@ -1,0 +1,71 @@
+@model RMW.Models.Comment
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CreatedOn)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CreatedOn)
+    @Html.ValidationMessageFor(model => model.CreatedOn)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.UpdatedOn)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.UpdatedOn)
+    @Html.ValidationMessageFor(model => model.UpdatedOn)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Author)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Author)
+    @Html.ValidationMessageFor(model => model.Author)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Body)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Body)
+    @Html.ValidationMessageFor(model => model.Body)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Email)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.IpAddress)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.IpAddress)
+    @Html.ValidationMessageFor(model => model.IpAddress)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.URL)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.URL)
+    @Html.ValidationMessageFor(model => model.URL)
+</div>
+
+<div class="editor-label">
+    Article
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.ArticleID, ((IEnumerable<RMW.Models.Article>)ViewBag.PossibleArticles).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Title), 
+        Value = option.ID.ToString(),
+        Selected = (Model != null) && (option.ID == Model.ArticleID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ArticleID)
+</div>

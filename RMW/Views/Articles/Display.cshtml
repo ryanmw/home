@@ -1,0 +1,98 @@
+﻿@model RMW.Models.Article
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDesc = Model.MetaDescription;
+}
+
+<h1>@Model.Title</h1>
+<i>Published: @Model.CreatedOn.ToString("yyyy-MM-dd")</i> | By:  <a class="h_img" href="https://plus.google.com/u/0/102203432508719579575?rel=author" target="_blank">Ryan Williams</a>
+<hr />
+@Html.Raw(Model.Body)
+<br />
+<hr />
+<a name="comments"></a>
+
+
+
+@if (Model.Comments != null && Model.Comments.Count > 0)
+{
+    <h4>Comments</h4>
+    
+    <ul class="comments">
+    @foreach (RMW.Models.Comment com in Model.Comments)
+    {
+        <li>
+            @if(string.IsNullOrWhiteSpace(com.Url))
+            {
+                <b>@com.Author</b>  <i>@com.CreatedOn.ToString("yyyy-MM-dd HH':'mm':'ss") UTC</i>
+            }
+            else 
+            {
+                 <b><a href="@com.Url" rel="nofollow" target="_blank">@com.Author</a></b>  <i>@com.CreatedOn.ToString("yyyy-MM-dd HH':'mm':'ss")</i> 
+            }
+            
+            
+                <br />
+            <p>
+            @com.Body
+        </p>
+                </li>
+    }
+        </ul>
+}
+else {
+ <h4>No Comments... Yet</h4>   
+}
+<br />
+        @Html.ValidationSummary(true)
+
+        @using (Html.BeginForm("Comment", "Articles", FormMethod.Post))
+        {
+            
+            <input type="hidden" name="ArticleId" value="@Model.Id" />
+<fieldset>
+    <legend><b>Comment On</b></legend>
+
+    <div class="editor-label">
+        <label for="Name">Name</label>
+    </div>
+    <div class="editor-field">
+        <input required="required" style="width:200px" type="text" name="Author" />
+
+
+    </div>
+
+    <div class="editor-label">
+        <label for="Email">E-Mail</label>
+    </div>
+    <div class="editor-field">
+        <input required="required" style="width:200px" type="email" name="Email" />
+
+
+    </div>
+
+
+    <div class="editor-label">
+        <label for="Url">Url <i>(optional)</i></label>
+    </div>
+    <div class="editor-field">
+        <input style="width:200px" type="url" name="Url" />
+
+
+    </div>
+
+
+    
+    <div class="editor-label">
+        <label for="Body">Body</label>
+    </div>
+    <div class="editor-field">
+        <textarea required="required" cols="20" rows="2" style="width:400px" name="Body"></textarea>
+
+    </div>
+       <br />
+                     @Html.Partial("_captcha")
+      <br />
+              <button class="green" type="submit">Submit</button>
+</fieldset>
+        }

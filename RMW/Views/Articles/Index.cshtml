@@ -1,0 +1,62 @@
+    @using RMW.Models
+    @model  PagedResult<Article>
+
+@{
+    ViewBag.Title = "Articles";
+}
+
+<h1>Articles</h1>
+
+<i>Here I document different aspects of development in the case that either I forget them or someone else wants to know them.</i>
+<hr />
+<br />
+<ul class="no_item_type" style="margin:0;padding:0;">
+
+@foreach (var item in Model.Results) {
+    
+    <li class="article_item">
+        <a href="@item.URLTo">@item.Title</a>
+        	
+        <ul class="no_item_type">
+            <li> <i>Published:	@item.CreatedOn.ToString("yyyy-MM-dd") | @if (item.Comments != null && item.Comments.Count > 0)
+                                                                        {
+                                                                            <a href="@item.URLTo#comments">Comments: @item.Comments.Count</a>
+                                                                        }
+                else 
+                {
+                                                                            <text>Comments:</text>
+                                                                          @item.Comments.Count.ToString()     
+                                                                        }
+                                                                  </i></li>
+            <li>
+
+                	@item.MetaDescription
+            </li>
+        </ul>
+    </li>
+}
+    </ul>
+
+ 
+@{
+    int pageCount = Model.PageCount;
+
+    for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++)
+    {
+        if (string.IsNullOrEmpty(Request.QueryString["page"]) && pageNumber == 1)
+        {
+    @pageNumber     
+        }
+        else if (!string.IsNullOrEmpty(Request.QueryString["page"]) &&
+            pageNumber == Convert.ToInt32(Request.QueryString["page"])
+            )
+        {
+    @pageNumber 
+        }
+        else
+        {
+    <a href="@Url.Content("~/articles/?" + "page" + "=" + pageNumber.ToString())">@pageNumber.ToString()</a>  
+        }
+    }
+    
+}

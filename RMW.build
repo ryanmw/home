@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0"
+          DefaultTargets="Test;FxCop;Deploy">
+
+  <UsingTask AssemblyFile=".\thirdparty\tools\MSBuildAsyncExec\AsyncExec.dll" TaskName="AsyncExec.AsyncExec" />
+  
+  <UsingTask TaskName="TransformXml"
+           AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\Web\Microsoft.Web.Publishing.Tasks.dll"/>
+
+  <UsingTask
+       AssemblyFile=".artifacts\Debug\FxCopTask.dll"
+       TaskName="FxCop"/>
+  
+    
+  <UsingTask AssemblyFile=".\thirdparty\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll"
+             TaskName="MSBuild.Community.Tasks.XmlRead" />
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+  </PropertyGroup>
+  
+      <ItemGroup>
+    <MsDeploy Include='".\thirdparty\tools\Microsoft Web Deploy V3\msdeploy.exe"' />
+    <PackageFile Include=".\buildartifacts\package\RMW.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MigrateEXE Include=".\thirdparty\tools\EF_Migrate\migrate.exe" />
+    <ArtifactsDestination Include="D:\rmw\src\buildartifacts" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <BuildArtifacts Include=".\buildartifacts\" />
+    <SolutionFile Include=".\RMW.sln" />
+    <Cassini Include="C:\Program Files (x86)\Common Files\microsoft shared\DevServer\11.0\WebDev.WebServer40.EXE" />
+    <Website Include=".\buildartifacts\_PublishedWebsites\RMW" />
+    <SolutionRoot Include=".\rmw" />
+    <IgnoreConfigs Include="$(Website)\*" Exclude="$(Website)\*\Web.Release.Config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NUnit Include=".\thirdparty\tools\NUnit-2.6.1\bin\nunit-console.exe" />
+    <TestAssembly Include=".\buildartifacts\RMW.Tests.dll" />
+    <TestResults Include=".\buildartifacts\TestResults.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FxCop Include=".\thirdparty\tools\FxCop\FxCopCmd.exe" />
+    <AssembliesToAnalyze Include=".\buildartifacts\RMW.dll" />
+   <ReferencedAssemblies Include='"C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 4\Assemblies\System.Net.Http.dll"' />  
+    <AnalysisReport Include=".\buildartifacts\FxCopAnalysis.xml" />
+  <RulesToIgnore Include="/ruleid:-Microsoft.Performance#CA1812 /ruleid:-Microsoft.Design#CA1034  /ruleid:-Microsoft.Design#CA1812 /ruleid:-Microsoft.Design#CA1031 /ruleid:-Microsoft.Design#CA1020 /ruleid:-Microsoft.Design#CA2210 /ruleid:-Microsoft.Design#CA1014 /ruleid:-Microsoft.Design#CA1053 /ruleid:-Microsoft.Design#CA1822 /ruleid:-Microsoft.Design#CA1054 /ruleid:-Microsoft.Naming#CA1726 /ruleid:-Microsoft.Performance#CA1822 /ruleid:-Microsoft.Design#CA1063 /ruleid:-Microsoft.Usage#CA1816 /ruleid:-Microsoft.Design#CA1056 /ruleid:-Microsoft.Usage#CA2227 /ruleid:-Microsoft.Design#CA1002 /ruleid:-Microsoft.Naming#CA1709 /ruleid:-Microsoft.Design#CA1026 /ruleid:-Microsoft.Naming#CA1702 /ruleid:-Microsoft.Usage#CA1801 /ruleid:-Microsoft.Naming#CA1720 /ruleid:-Microsoft.Performance#CA1804 /ruleid:-Microsoft.Naming#CA1721 /ruleid:-Microsoft.Naming#CA1704 /ruleid:-Microsoft.Globalization#CA1308 
+ 
+" />
+  </ItemGroup>
+
+  <Target Name="Clean">
+    <RemoveDir Directories="@(BuildArtifacts)"/>
+  </Target>
+
+  <Target Name="Init" DependsOnTargets="Clean">
+    <MakeDir Directories="@(BuildArtifacts)"/>
+  </Target>
+
+  <Target Name="Compile" DependsOnTargets="Init">
+
+    <MSBuild Projects="@(SolutionFile)" Targets="Rebuild"
+             Properties="OutDir=%(BuildArtifacts.FullPath);Configuration=$(Configuration)" />
+
+    <TransformXml Source="@(SolutionRoot)\web.config" Transform="@(SolutionRoot)\web.release.config"
+                  Destination="@(Website)\web.config" />
+  </Target>
+  
+  <Target Name="Deploy" DependsOnTargets="MigrateDB">
+
+
+
+    <PropertyGroup>
+      <Source>%(PackageFile.FullPath)</Source>
+    </PropertyGroup>
+  <Exec Command='@(MsDeploy) -verb:sync -source:package="$(Source)" -dest:iisApp=ryanmichaelwilliams.com,computerName=https://web801.discountasp.net:8172/MsDeploy.axd?site=ryanmichaelwilliams.com,username=storeklubco,password=11f7143b46,authtype=Basic -allowUntrusted -verbose -enableRule:DoNotDeleteRule' />
+  
+  </Target>
+
+
+  <Target Name="Test" DependsOnTargets="Compile">
+    <Exec Command="@(NUnit) @(TestAssembly) /xml=@(TestResults)" />
+  </Target>
+
+  
+
+  <Target Name="FxCop" DependsOnTargets="Compile">
+    <Exec Command="@(FxCop) /file:@(AssembliesToAnalyze) /reference:@(ReferencedAssemblies) /out:@(AnalysisReport) @(RulesToIgnore)" />
+   <PropertyGroup>
+     
+
+     
+    
+    <FxCopCriticalErrors>0</FxCopCriticalErrors>
+    <FxCopErrors>0</FxCopErrors>
+    <FxCopCriticalWarnings>0</FxCopCriticalWarnings>
+    </PropertyGroup>
+    <XmlRead ContinueOnError="True"
+             XmlFileName="@(AnalysisReport)"
+             XPath="string(count(//Issue[@Level='CriticalError']))">
+      <Output TaskParameter="Value" PropertyName="FxCopCriticalErrors" />
+      </XmlRead>
+    <XmlRead ContinueOnError="True"
+             XmlFileName="@(AnalysisReport)"
+             Xpath="string(count(//Issue[@Level='Error']))">
+    <Output TaskParameter="Value" PropertyName="FxCopErrors" ></Output>
+    </XmlRead>
+        <XmlRead ContinueOnError="True"
+             XmlFileName="@(AnalysisReport)"
+             Xpath="string(count(//Issue[@Level='CriticalWarning']))">
+    <Output TaskParameter="Value" PropertyName="FxCopCriticalWarnings" ></Output>
+    </XmlRead>
+    <Error Text="FxCop encountered $(Count) material rule violations"
+  Condition="$(FxCopCriticalErrors) &gt; 0 or $(FxCopErrors) &gt; 0 or $(FxCopCriticalWarnings) &gt; 0" /> 
+  
+  </Target>
+
+  <Target Name="StartWebsite" DependsOnTargets="StopWebsite;Compile">
+    <AsyncExec Command='"@(Cassini)" /port:9999 /path:"%(Website.FullPath)" /vpath:' />
+  </Target>
+
+  <Target Name="StopWebsite">
+    <Exec Command="taskkill /f /im WebDev.WebServer40.EXE" IgnoreExitCode="true"
+       IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+
+  <Target Name="CopyMigrateDB"  >
+    <Copy SourceFiles='%(MigrateEXE.FullPath)' DestinationFolder="D:\rmw\src\buildartifacts" />
+  </Target>
+  
+  <Target Name="MigrateDB" DependsOnTargets="Package;CopyMigrateDB">
+    <Exec Command='D:\rmw\src\buildartifacts\Migrate.exe RMW.dll /connectionString="Data Source=sql2k1201.discountasp.net;Initial Catalog=SQL2012_869791_storeklub;User ID=SQL2012_869791_storeklub_user;Password=11f7143b46;" /connectionProviderName="System.Data.SqlClient" /verbose"' />
+
+
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Compile;Test;FxCop">
+    <PropertyGroup>
+      <PackageDir>%(PackageFile.RootDir)%(PackageFile.Directory)</PackageDir>
+      <Source>%(Website.FullPath)</Source>
+      <Destination>%(PackageFile.FullPath)</Destination>
+    </PropertyGroup>
+    <MakeDir Directories="$(PackageDir)" />
+    
+    <Exec Command='@(MSDeploy) -verb:Sync -source:iisApp="$(Source)" -dest:package="$(Destination)"' />
+
+    
+  </Target>
+
+
+
+</Project>

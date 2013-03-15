@@ -1,0 +1,11 @@
+﻿@if (Request.IsAuthenticated) {
+    <text>
+ 
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a> | 
+<a href="~/articles/admin">Admin Articles</a>
+        
+    </text>
+} else {
+     
+       @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) 
+}

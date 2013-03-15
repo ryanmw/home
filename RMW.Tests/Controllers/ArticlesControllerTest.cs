@@ -24,6 +24,19 @@ namespace RMW.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
-      
+
+
+        [Test]
+        public void Admin()
+        {
+            // Arrange
+            ArticlesController controller = new ArticlesController();
+
+            // Act
+            ViewResult result = controller.Admin() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
     }
 }

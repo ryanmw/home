@@ -180,7 +180,14 @@ task -name Deploy -depends  DeployPackage -description "Hits the homepage to ens
         if ( $webCheckResponse.StatusCode -eq '200')
         {
             Write-Host ".................................."
-            Write-Host "-------- Machine is ready --------" -BackgroundColor Green -ForegroundColor Black
+            Write-Host "
+                         __    _               _                             __     
+   ____ ___  ____ ______/ /_  (_)___  ___     (_)____   ________  ____ _____/ /_  __
+  / __ `__ \/ __ `/ ___/ __ \/ / __ \/ _ \   / / ___/  / ___/ _ \/ __ `/ __  / / / /
+ / / / / / / /_/ / /__/ / / / / / / /  __/  / (__  )  / /  /  __/ /_/ / /_/ / /_/ / 
+/_/ /_/ /_/\__._/\___/_/ /_/_/_/ /_/\___/  /_/____/  /_/   \___/\__._/\__._/\__. /  
+                                                                           /____/     
+                                                                           " -BackgroundColor Green -ForegroundColor Black
             Write-Host ".................................."
         }
 

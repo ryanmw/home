@@ -1,8 +1,14 @@
 
-if ( Test-Path ./configs.ps1 )
+if ( Test-Path .\configs.ps1 )
 {
-. ./configs.ps1
-
+    Include ".\configs.ps1"
+}
+ 
+FormatTaskName {
+   param($taskName)
+   $currentTaskTime = Get-date
+   $currentTaskTime = $currentTaskTime.ToUniversalTime().ToString("u")
+   write-host "Begin: $currentTaskTime ----- Task: $taskName"   -foregroundcolor Cyan
 }
 
 properties {
@@ -78,6 +84,10 @@ properties {
     {
         $webProjectLocation = ''
     }
+    if (  $statusCheckURL -eq $null)
+    {
+         $statusCheckURL = ''
+    }
 
     #unit tests
     if ( $MSTestLocation -eq $null)
@@ -126,6 +136,7 @@ task -name Build -description "Build the solution" -depends ListConfigs -action 
 
 task -name Clean -description "Cleans the solution" -depends ValidateMSBuildmsBuildVerbosity -action { 
     exec  {
+    
         msbuild $solutionLocation /t:clean /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig
     }
 };
@@ -156,7 +167,29 @@ task -name MigrateDB -depends UnitTest -description "Runs migration of database"
 };
 
 
-task -name Deploy -depends PackageZip, MigrateDB -description "Deploys package to environment" -action { 
+task -name Deploy -depends  DeployPackage -description "Hits the homepage to ensure the package was deployed" -action {
+
+    exec  {
+
+        Write-Host "Requesting URL: $statusCheckURL..."
+
+        $webCheckResponse = Invoke-WebRequest  $statusCheckURL   
+
+        Write-host "Status code: " $webCheckResponse.StatusCode
+
+        if ( $webCheckResponse.StatusCode -eq '200')
+        {
+            Write-Host ".................................."
+            Write-Host "-------- Machine is ready --------" -BackgroundColor Green -ForegroundColor Black
+            Write-Host ".................................."
+        }
+
+    }
+
+};
+
+
+task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys package to environment" -action { 
     exec  {
   
         msbuild $webprojectLocation `

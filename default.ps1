@@ -3,13 +3,6 @@ if ( Test-Path .\configs.ps1 )
 {
     Include ".\configs.ps1"
 }
- 
-FormatTaskName {
-   param($taskName)
-   $currentTaskTime = Get-date
-   $currentTaskTime = $currentTaskTime.ToUniversalTime().ToString("u")
-   write-host "Begin: $currentTaskTime ----- Task: $taskName"   -foregroundcolor Cyan
-}
 
 properties {
  
@@ -98,18 +91,53 @@ properties {
     {
         $testDLLLocation = ''
     }   
+
+    #display
+    if ( $displayTaskStartStopTimes -eq $null)
+    {
+        $displayTaskStartStopTimes = $false
+    } 
+    if ( $showConfigsAtStart -eq $null)
+    {
+       $showConfigsAtStart =  $false
+    } 
+
+     
+    
+} 
+
+#psake functions
+FormatTaskName {
+   param($taskName)
+  
+   write-host "----- Task: $taskName -----"   -foregroundcolor Cyan
 }
+
+TaskSetup {
+    if ( $displayTaskStartStopTimes)
+    {
+        $currentTaskTime = Get-date
+        $currentTaskTime = $currentTaskTime.ToUniversalTime().ToString("u")
+        Write-Host "Begin: $currentTaskTime" -ForegroundColor DarkMagenta
+    }
+}
+
+TaskTearDown {
+    if ( $displayTaskStartStopTimes)
+    {
+        $currentTaskTime = Get-date
+        $currentTaskTime = $currentTaskTime.ToUniversalTime().ToString("u")
+        Write-Host "end: $currentTaskTime" -ForegroundColor DarkGray
+    }
+}
+ 
+#tasks
 
 task -name ValidateConfigs -description "Validates all of the config settings" -depends ValidateMSBuildmsBuildVerbosity, ValidateMSBuildConfig, ValidateConfigsHaveValues
 
-task -name ValidateMSBuildConfig  -description "Validates msBuildVerbosity" -action {
+task -name ValidateMSBuildConfig  -description "Validates MS build config setting" -action {
     assert( 'debug', 'release' -contains $msBuildConfig) `
     "Invalid msBuildConfig: $msBuildConfig, must be: 'debug' or 'release'"
-};
-
-task -name ValidateConfigsHaveValues  -description "Validates that configs which require a value, have a value" -action {
-    
-    #ValidateConfigsHaveValues
 };
 
 task -name ValidateMSBuildmsBuildVerbosity  -description "Validates MS build config" -action {
@@ -117,24 +145,71 @@ task -name ValidateMSBuildmsBuildVerbosity  -description "Validates MS build con
     "Invalid msBuildVerbosity: $msBuildVerbosity, must be:  'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag' or 'diagnostic'"
 };
 
+task -name ValidateConfigsHaveValues  -description "Validates that configs which require a value, have a value" -action {
+
+      if ([string]::IsNullOrWhiteSpace($msBuildConfig)) { Write-Host '$msBuildConfig is blank' -BackgroundColor Red -ForegroundColor Black }
+      if ([string]::IsNullOrWhiteSpace($msBuildVerbosity)) { Write-Host '$msBuildVerbosity is blank'  -BackgroundColor Red -ForegroundColor Black }
+      if ([string]::IsNullOrWhiteSpace($solutionLocation)) { Write-Host '$solutionLocation is blank'  -BackgroundColor Red -ForegroundColor Black }
+      if ([string]::IsNullOrWhiteSpace($migrateConnectionString)) { Write-Host '$migrateConnectionString is blank' -BackgroundColor Red -ForegroundColor Black }
+      if ( $migrateDBParams -eq $null) { Write-Host '$migrateDBParams is null, set to empty string to continue'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($migrateApplicationDLL)) { Write-Host '$migrateApplicationDLL is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($migrateExeLocation)) { Write-Host '$migrateExeLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($removeMigrateLoation)) { Write-Host '$removeMigrateLoation is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($dbUpdate)) { Write-Host '$dbUpdate is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($webprojectBinLocation)) { Write-Host '$webprojectBinLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($packageName)) { Write-Host '$packageName is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($packageOutputDir)) { Write-Host '$packageOutputDir is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($msDeployURL)) { Write-Host '$msDeployURL is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($msDeployUserName)) { Write-Host '$msDeployUserName is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($msDeployPassword)) { Write-Host '$msDeployPassword is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($webProjectLocation)) { Write-Host '$webProjectLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($statusCheckURL)) { Write-Host '$statusCheckURL is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($MSTestLocation)) { Write-Host '$MSTestLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ([string]::IsNullOrWhiteSpace($testDLLLocation)) { Write-Host '$testDLLLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
+      if ( $displayTaskStartStopTimes -eq $null) { Write-Host '$displayTaskStartStopTimes is null'  -BackgroundColor Red -ForegroundColor Black } 
+      if ( $showConfigsAtStart -eq $null) { Write-Host '$showConfigsAtStart is null'  -BackgroundColor Red -ForegroundColor Black } 
+
+};
+
 task -name ListConfigs -description "Lists configs" -depends ValidateConfigs -action {
- 
-     Write-Host "config:  $msBuildConfig " -ForegroundColor Magenta
-     Write-Host "msBuildVerbosity:  $msBuildVerbosity " -ForegroundColor Magenta
-     Write-Host "migrateConnectionString:  $migrateConnectionString " -ForegroundColor Magenta
-     Write-Host "migrateDBParams:  $migrateDBParams " -ForegroundColor Magenta
-     Write-Host "migrateApplicationDLL:  $migrateApplicationDLL " -ForegroundColor Magenta
-     Write-Host "packageName:  $packageName " -ForegroundColor Magenta
-     Write-Host "msWebDeployDestination:  $msWebDeployDestination " -ForegroundColor Magenta
+    
+    if ( $showConfigsAtStart)
+    {
+        Write-Host "Listing all configs" -ForegroundColor Black -BackgroundColor Magenta
+        
+       Write-Host '$msBuildConfig = ' $msBuildConfig -ForegroundColor Magenta
+       Write-Host '$msBuildVerbosity = ' $msBuildVerbosity -ForegroundColor Magenta
+       Write-Host '$solutionLocation = ' $solutionLocation -ForegroundColor Magenta
+       Write-Host '$migrateConnectionString = ' $migrateConnectionString -ForegroundColor Magenta
+       Write-Host '$migrateDBParams = ' $migrateDBParams -ForegroundColor Magenta
+       Write-Host '$migrateApplicationDLL = ' $migrateApplicationDLL -ForegroundColor Magenta
+       Write-Host '$migrateExeLocation = ' $migrateExeLocation -ForegroundColor Magenta
+       Write-Host '$removeMigrateLoation = ' $removeMigrateLoation -ForegroundColor Magenta
+       Write-Host '$dbUpdate = ' $dbUpdate -ForegroundColor Magenta
+       Write-Host '$webprojectBinLocation = ' $webprojectBinLocation -ForegroundColor Magenta
+       Write-Host '$packageName = ' $packageName -ForegroundColor Magenta
+       Write-Host '$packageOutputDir = ' $packageOutputDir -ForegroundColor Magenta
+       Write-Host '$msDeployURL = ' $msDeployURL -ForegroundColor Magenta
+       Write-Host '$msDeployUserName = ' $msDeployUserName -ForegroundColor Magenta
+       Write-Host '$msDeployPassword = ' $msDeployPassword -ForegroundColor Magenta
+       Write-Host '$webProjectLocation = ' $webProjectLocation -ForegroundColor Magenta
+       Write-Host '$statusCheckURL = ' $statusCheckURL -ForegroundColor Magenta
+       Write-Host '$MSTestLocation = ' $MSTestLocation -ForegroundColor Magenta
+       Write-Host '$testDLLLocation = ' $testDLLLocation -ForegroundColor Magenta
+       Write-Host '$displayTaskStartStopTimes = ' $displayTaskStartStopTimes -ForegroundColor Magenta
+       Write-Host '$showConfigsAtStart = ' $showConfigsAtStart -ForegroundColor Magenta
+      
+     }
+
 }
 
-task -name Build -description "Build the solution" -depends ListConfigs -action { 
+task -name Build -description "Build the solution" -depends ValidateConfigs, ListConfigs -action { 
     exec  {
         msbuild $solutionLocation /t:build /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig
     }
 };
 
-task -name Clean -description "Cleans the solution" -depends ValidateMSBuildmsBuildVerbosity -action { 
+task -name Clean -description "Cleans the solution" -depends ValidateConfigs -action { 
     exec  {
     
         msbuild $solutionLocation /t:clean /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig
@@ -148,6 +223,7 @@ task -name UnitTest -depends Rebuild -description "Runs unit tests" -action {
       & $MSTestLocation  /testcontainer:$testDLLLocation
     }
 };
+
 
 
 task -name PackageZip -depends UnitTest -description "Deploys package to environment" -action { 
@@ -167,11 +243,34 @@ task -name MigrateDB -depends UnitTest -description "Runs migration of database"
 };
 
 
+task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys package to environment" -action { 
+    exec  {
+        if ( $msBuildConfig -eq 'release') {
+                msbuild $webprojectLocation `
+                    /p:Configuration=$msBuildConfig `
+                    /P:DeployOnBuild=True `
+                    /P:DeployTarget=MSDeployPublish `
+                    /P:MsDeployServiceUrl=$msDeployURL `
+                    /P:AllowUntrustedCertificate=True `
+                    /P:MSDeployPublishMethod=WMSvc `
+                    /P:CreatePackageOnPublish=True `
+                    /P:UserName=$msDeployUserName `
+                    /P:Password=$msDeployPassword `
+                    /verbosity:$msBuildVerbosity 
+        }
+        else 
+        {
+            Write-Host "Cannot deploy, '$msBuildConfig'" -ForegroundColor Blue -BackgroundColor White
+        }
+    }
+};
+
+
 task -name Deploy -depends DeployPackage  -description "Hits the homepage to ensure the package was deployed" -action {
 
     exec  {
-
-        Write-Host "Requesting URL: '$statusCheckURL'..."
+     if ( $msBuildConfig -eq 'release') {
+      Write-Host "Requesting URL: '$statusCheckURL'..."
         
         $webCheckResponse = Invoke-WebRequest  $statusCheckURL   
 
@@ -191,26 +290,15 @@ task -name Deploy -depends DeployPackage  -description "Hits the homepage to ens
             
         }
 
+     }
+     else 
+        {
+            Write-Host "Cannot check url, '$msBuildConfig'"  -ForegroundColor Blue -BackgroundColor White
+        }
+
+       
     }
 
-};
-
-
-task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys package to environment" -action { 
-    exec  {
-  
-        msbuild $webprojectLocation `
-           /p:Configuration=$msBuildConfig `
-           /P:DeployOnBuild=True `
-           /P:DeployTarget=MSDeployPublish `
-           /P:MsDeployServiceUrl=$msDeployURL `
-           /P:AllowUntrustedCertificate=True `
-           /P:MSDeployPublishMethod=WMSvc `
-           /P:CreatePackageOnPublish=True `
-           /P:UserName=$msDeployUserName `
-           /P:Password=$msDeployPassword `
-           /verbosity:$msBuildVerbosity 
-    }
 };
 
 task -name default  -depends ListConfigs 

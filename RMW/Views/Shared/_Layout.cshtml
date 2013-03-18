@@ -31,18 +31,6 @@
             <nav>
                 <ul>
              
-                       @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "home" &&
-                            ViewContext.RouteData.Values["action"].ToString().ToLower() == "portfolio"))
-                       {
-             
-                             <li>@Html.ActionLink("Portfolio", "Portfolio", "Home", null, new { @class="shadowing active_menu" })</li>   
-                       }
-                    else 
-                    {
-                           <li>@Html.ActionLink("Portfolio", "Portfolio", "Home", null, new { @class="shadowing" })</li>   
-                       }
-                 
-
 
 
                     
@@ -72,6 +60,20 @@
                        }
 
                 
+
+                    
+                       @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "contact" &&
+                            ViewContext.RouteData.Values["action"].ToString().ToLower() == "contact"))
+                       {
+             
+                             <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class="shadowing active_menu" })</li>   
+                       }
+                    else 
+                    {
+                           <li>@Html.ActionLink("Contact", "Contact", "Home",  null, new { @class="shadowing" })</li>   
+                    }
+                 
+
                  
                 </ul>
             </nav>
@@ -104,20 +106,18 @@
 
       
                 </ul>
-                <hr />
-                <p><b>Contact</b></p>
-                <ul>
-                    <li> <a href="mailto:ryanmichaelwilliams@gmail.com">ryanmichaelwilliams&#64;<wbr>gmail<wbr>.com</a></li>
-                    <li> (313) 451-0386</li>
-                </ul>
+  
              <hr />
                 <p><b>Location</b></p>
                 San Francisco, California  
                  <img src="~/Content/img/US_small.png" />
 
    <hr />
-                    
+                     <p><b>Buy This Hosting</b></p> 
            <a class="h_img" target="_blank" href="http://www.discountasp.net/a/lrsnys_b_38"><img src="http://www.discountasp.net/c/b_38" alt="ASP.NET Hosting - DiscountASP.NET" border="0" /></a>   
+         <hr />
+                     <p><b>Open Sourced</b></p> 
+           <a   target="_blank" href="https://github.com/ryanmw/home">http://github.com/ryanmw</a>   
         
     </div>
     </aside>

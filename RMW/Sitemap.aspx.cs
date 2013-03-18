@@ -61,6 +61,15 @@ namespace RMW
             writer.WriteElementString("changefreq", "weekly");
             writer.WriteElementString("priority", "1.0");
             writer.WriteEndElement();
+            writer.WriteString("\r\n");
+
+            // contact
+            writer.WriteStartElement("url");
+            writer.WriteElementString("loc", string.Format(CultureInfo.InvariantCulture, "{0}/home/contact", domainRoot));
+            writer.WriteElementString("lastmod", String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", DateTime.UtcNow));
+            writer.WriteElementString("changefreq", "weekly");
+            writer.WriteElementString("priority", "1.0");
+            writer.WriteEndElement();
             writer.WriteString("\r\n");  
 
             // articles root

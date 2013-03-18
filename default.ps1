@@ -7,103 +7,37 @@ if ( Test-Path .\configs.ps1 )
 properties {
  
     #msbuild
-    if ( $msBuildConfig -eq $null)
-    {
-        $msBuildConfig = 'debug'
-    }
-    if ( $msBuildVerbosity -eq $null)
-    {
-        $msBuildVerbosity = 'normal'
-    }
-    if ( $solutionLocation -eq $null)
-    {
-        $solutionLocation = ''
-    }
+    if ( $msBuildConfig -eq $null){$msBuildConfig = 'debug'}
+    if ( $msBuildVerbosity -eq $null){$msBuildVerbosity = 'normal'}
+    if ( $solutionLocation -eq $null){$solutionLocation = '' }
      
     #DB migrations
-    if ( $migrateConnectionString -eq $null)
-    {
-        $migrateConnectionString = ''
-    }
-    if ( $migrateDBParams -eq $null)
-    {
-        $migrateDBParams = '/verbose'
-    }
-    if ( $migrateApplicationDLL -eq $null)
-    {
-        $migrateApplicationDLL = ''
-    }
-    if ( $migrateExeLocation -eq $null)
-    {
-        $migrateExeLocation = ''
-    }
-    if ( $removeMigrateLoation -eq $null)
-    {
-        $removeMigrateLoation = ''
-    }
-    if ( $dbUpdate -eq $null)
-    {
-        $dbUpdate = ''
-    }
-    if ( $webprojectBinLocation -eq $null)
-    {
-        $webprojectBinLocation = ''
-    }
+    if ( $migrateConnectionString -eq $null){$migrateConnectionString = ''}
+    if ( $migrateDBParams -eq $null){$migrateDBParams = '/verbose'}
+    if ( $migrateApplicationDLL -eq $null){$migrateApplicationDLL = ''}
+    if ( $migrateExeLocation -eq $null) { $migrateExeLocation = ''}
+    if ( $removeMigrateLoation -eq $null) { $removeMigrateLoation = ''}
+    if ( $dbUpdate -eq $null){$dbUpdate = ''}
+    if ( $webprojectBinLocation -eq $null) { $webprojectBinLocation = ''}
   
     #Package
-    if ( $packageName -eq $null)
-    {
-        $packageName = ''
-    }
-    if ( $packageOutputDir -eq $null)
-    {
-        $packageOutputDir =  '.\buildartifacts\'
-    }
+    if ( $packageName -eq $null){ $packageName = ''}
+    if ( $packageOutputDir -eq $null) { $packageOutputDir =  '.\buildartifacts\' }
      
     #Deployment
-    if ( $msDeployURL -eq $null)
-    {
-        $msDeployURL = ''
-    }
-    if ( $msDeployUserName -eq $null)
-    {
-        $msDeployUserName = ''
-    }
-    if ( $msDeployPassword -eq $null)
-    {
-        $msDeployPassword = ''
-    }
-    if ( $webProjectLocation -eq $null)
-    {
-        $webProjectLocation = ''
-    }
-    if (  $statusCheckURL -eq $null)
-    {
-         $statusCheckURL = ''
-    }
+    if ( $msDeployURL -eq $null){$msDeployURL = '' }
+    if ( $msDeployUserName -eq $null) {$msDeployUserName = ''}
+    if ( $msDeployPassword -eq $null) {$msDeployPassword = ''}
+    if ( $webProjectLocation -eq $null){ $webProjectLocation = '' }
+    if (  $statusCheckURL -eq $null){$statusCheckURL = '' }
 
     #unit tests
-    if ( $MSTestLocation -eq $null)
-    {
-        $MSTestLocation = ''
-    }
-    if ( $testDLLLocation -eq $null)
-    {
-        $testDLLLocation = ''
-    }   
+    if ( $MSTestLocation -eq $null) { $MSTestLocation = '' }
+    if ( $testDLLLocation -eq $null) { $testDLLLocation = '' }   
 
     #display
-    if ( $displayTaskStartStopTimes -eq $null)
-    {
-        $displayTaskStartStopTimes = $false
-    } 
-    if ( $showConfigsAtStart -eq $null)
-    {
-       $showConfigsAtStart =  $false
-    } 
-
-     
-    
+    if ( $displayTaskStartStopTimes -eq $null){ $displayTaskStartStopTimes = $false } 
+    if ( $showConfigsAtStart -eq $null) { $showConfigsAtStart =  $false } 
 } 
 
 #psake functions

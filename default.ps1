@@ -167,28 +167,28 @@ task -name MigrateDB -depends UnitTest -description "Runs migration of database"
 };
 
 
-task -name Deploy -depends  DeployPackage -description "Hits the homepage to ensure the package was deployed" -action {
+task -name Deploy -depends DeployPackage  -description "Hits the homepage to ensure the package was deployed" -action {
 
     exec  {
 
-        Write-Host "Requesting URL: $statusCheckURL..."
-
+        Write-Host "Requesting URL: '$statusCheckURL'..."
+        
         $webCheckResponse = Invoke-WebRequest  $statusCheckURL   
 
         Write-host "Status code: " $webCheckResponse.StatusCode
 
+
         if ( $webCheckResponse.StatusCode -eq '200')
         {
-            Write-Host ".................................."
+            
             Write-Host "
-                         __    _               _                             __     
-   ____ ___  ____ ______/ /_  (_)___  ___     (_)____   ________  ____ _____/ /_  __
-  / __ `__ \/ __ `/ ___/ __ \/ / __ \/ _ \   / / ___/  / ___/ _ \/ __ `/ __  / / / /
- / / / / / / /_/ / /__/ / / / / / / /  __/  / (__  )  / /  /  __/ /_/ / /_/ / /_/ / 
-/_/ /_/ /_/\__._/\___/_/ /_/_/_/ /_/\___/  /_/____/  /_/   \___/\__._/\__._/\__. /  
-                                                                           /____/     
-                                                                           " -BackgroundColor Green -ForegroundColor Black
-            Write-Host ".................................."
+                _    _            _                      _      
+  _ __  __ _ __| |_ (_)_ _  ___  (_)___  _ _ ___ __ _ __| |_  _ 
+ | '  \/ _' / _| ' \| | ' \/ -_) | (_-< | '_/ -_) _' / _' | || |
+ |_|_|_\__,_\__|_||_|_|_||_\___| |_/__/ |_| \___\__,_\__,_|\_, |
+                                                           |__/   
+                                                                           " 
+            
         }
 
     }

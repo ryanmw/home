@@ -127,7 +127,7 @@ TaskTearDown {
     {
         $currentTaskTime = Get-date
         $currentTaskTime = $currentTaskTime.ToUniversalTime().ToString("u")
-        Write-Host "end: $currentTaskTime" -ForegroundColor DarkGray
+        Write-Host "End: $currentTaskTime" -ForegroundColor DarkGray
     }
 }
  
@@ -201,7 +201,7 @@ task -name ListConfigs -description "Lists configs" -depends ValidateConfigs -ac
       
      }
 
-}
+};
 
 task -name Build -description "Build the solution" -depends ValidateConfigs, ListConfigs -action { 
     exec  {

@@ -71,7 +71,7 @@
                   Destination="@(Website)\web.config" />
   </Target>
   
-  <Target Name="Deploy" DependsOnTargets="MigrateDB">
+  <Target Name="Deploy" DependsOnTargets="Package">
 
 
 

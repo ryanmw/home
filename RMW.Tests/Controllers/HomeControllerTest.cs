@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using NUnit.Framework;
-using RMW;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RMW.Controllers;
+using System.Web.Mvc;
 
 namespace RMW.Tests.Controllers
 {
-    [TestFixture]
+    [TestClass]
     public class HomeControllerTest
     {
-        [Test]
+        [TestMethod]
         public void Index()
         {
             // Arrange
@@ -25,7 +20,7 @@ namespace RMW.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [Test]
+        [TestMethod]
         public void About()
         {
             // Arrange

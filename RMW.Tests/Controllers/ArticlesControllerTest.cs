@@ -1,42 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using NUnit.Framework;
-using RMW;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RMW.Controllers;
+using System.Web.Mvc;
 
 namespace RMW.Tests.Controllers
 {
-    [TestFixture]
-    public class ArticlesControllerTest
-    {
-        [Test]
-        public void Index()
-        {
-            // Arrange
-            ArticlesController controller = new ArticlesController();
+    ////[TestClass]
+    ////public class ArticlesControllerTest
+    ////{
+    ////    [TestMethod]
+    ////    public void Index()
+    ////    {
+    ////        // Arrange
+    ////        ArticlesController controller = new ArticlesController();
 
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
+    ////        // Act
+    ////        ActionResult result = controller.Index() as ActionResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+    ////        // Assert
+    ////        Assert.IsNotNull(result);
+    ////    }
 
 
-        [Test]
-        public void Admin()
-        {
-            // Arrange
-            ArticlesController controller = new ArticlesController();
+        //[TestMethod]
+        //public void Admin()
+        //{
+        //    // Arrange
+        //    ArticlesController controller = new ArticlesController();
 
-            // Act
-            ViewResult result = controller.Admin() as ViewResult;
+        //    // Act
+        //    ViewResult result = controller.Admin() as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
-    }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
+    //}
 }

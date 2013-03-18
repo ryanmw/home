@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
+ 
 
 namespace RMW.Tests.Web
 {
@@ -13,7 +13,7 @@ namespace RMW.Tests.Web
         //    RouteConfig.RegisterRoutes(RouteTable.Routes);
         //}
 
-        [Test]
+        [TestMethod]
         public void HomeShouldMapToHomeController()
         {
             Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual(1, 2);

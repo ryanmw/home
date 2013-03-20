@@ -67,14 +67,14 @@ TaskTearDown {
  
 #tasks
 
-task -name ValidateConfigs -description "Validates all of the config settings" -depends ValidateMSBuildmsBuildVerbosity, ValidateMSBuildConfig, ValidateConfigsHaveValues
+task -name ValidateConfigs -description "Validates all of the config settings" -depends ValidateMSBuildVerbosity, ValidateMSBuildConfig, ValidateConfigsHaveValues
 
 task -name ValidateMSBuildConfig  -description "Validates MS build config setting" -action {
     assert( 'debug', 'release' -contains $msBuildConfig) `
     "Invalid msBuildConfig: $msBuildConfig, must be: 'debug' or 'release'"
 };
 
-task -name ValidateMSBuildmsBuildVerbosity  -description "Validates MS build config" -action {
+task -name ValidateMSBuildVerbosity  -description "Validates MS build config" -action {
     assert( 'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag', 'diagnostic' -contains $msBuildVerbosity) `
     "Invalid msBuildVerbosity: $msBuildVerbosity, must be:  'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag' or 'diagnostic'"
 };

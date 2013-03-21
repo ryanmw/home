@@ -160,7 +160,7 @@ task -name UnitTest -depends Rebuild -description "Runs unit tests" -action {
 
 
 
-task -name PackageZip -depends UnitTest -description "Deploys package to environment" -action { 
+task -name PackageZip -depends UnitTest -description "Makes a zip package" -action { 
     exec  {
      msbuild $webProjectLocation /t:Package /verbosity:$msBuildVerbosity /p:Configuration=$msBuildConfig /p:OutDir=$packageOutputDir
   }

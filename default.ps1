@@ -81,28 +81,30 @@ task -name ValidateMSBuildVerbosity  -description "Validates MS build config" -a
 
 task -name ValidateConfigsHaveValues  -description "Validates that configs which require a value, have a value" -action {
 
-      if ([string]::IsNullOrWhiteSpace($msBuildConfig)) { Write-Host '$msBuildConfig is blank' -BackgroundColor Red -ForegroundColor Black }
-      if ([string]::IsNullOrWhiteSpace($msBuildVerbosity)) { Write-Host '$msBuildVerbosity is blank'  -BackgroundColor Red -ForegroundColor Black }
-      if ([string]::IsNullOrWhiteSpace($solutionLocation)) { Write-Host '$solutionLocation is blank'  -BackgroundColor Red -ForegroundColor Black }
-      if ([string]::IsNullOrWhiteSpace($migrateConnectionString)) { Write-Host '$migrateConnectionString is blank' -BackgroundColor Red -ForegroundColor Black }
-      if ( $migrateDBParams -eq $null) { Write-Host '$migrateDBParams is null, set to empty string to continue'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($migrateApplicationDLL)) { Write-Host '$migrateApplicationDLL is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($migrateExeLocation)) { Write-Host '$migrateExeLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($removeMigrateLoation)) { Write-Host '$removeMigrateLoation is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($dbUpdate)) { Write-Host '$dbUpdate is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($webprojectBinLocation)) { Write-Host '$webprojectBinLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($packageName)) { Write-Host '$packageName is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($packageOutputDir)) { Write-Host '$packageOutputDir is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($msDeployURL)) { Write-Host '$msDeployURL is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($msDeployUserName)) { Write-Host '$msDeployUserName is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($msDeployPassword)) { Write-Host '$msDeployPassword is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($webProjectLocation)) { Write-Host '$webProjectLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($statusCheckURL)) { Write-Host '$statusCheckURL is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($MSTestLocation)) { Write-Host '$MSTestLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ([string]::IsNullOrWhiteSpace($testDLLLocation)) { Write-Host '$testDLLLocation is blank'  -BackgroundColor Red -ForegroundColor Black } 
-      if ( $displayTaskStartStopTimes -eq $null) { Write-Host '$displayTaskStartStopTimes is null'  -BackgroundColor Red -ForegroundColor Black } 
-      if ( $showConfigsAtStart -eq $null) { Write-Host '$showConfigsAtStart is null'  -BackgroundColor Red -ForegroundColor Black } 
+exec {
 
+      if ([string]::IsNullOrWhiteSpace($msBuildConfig)) { Write-Host '$msBuildConfig is blank' -BackgroundColor Red -ForegroundColor Black ` exit 1 }
+      if ([string]::IsNullOrWhiteSpace($msBuildVerbosity)) { Write-Host '$msBuildVerbosity is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 }
+      if ([string]::IsNullOrWhiteSpace($solutionLocation)) { Write-Host '$solutionLocation is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 }
+      if ([string]::IsNullOrWhiteSpace($migrateConnectionString)) { Write-Host '$migrateConnectionString is blank' -BackgroundColor Red -ForegroundColor Black ` exit 1 }
+      if ( $migrateDBParams -eq $null) { Write-Host '$migrateDBParams is null, set to empty string to continue'  -BackgroundColor Red -ForegroundColor Black ` exit 1 } 
+      if ([string]::IsNullOrWhiteSpace($migrateApplicationDLL)) { Write-Host '$migrateApplicationDLL is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 } 
+      if ([string]::IsNullOrWhiteSpace($migrateExeLocation)) { Write-Host '$migrateExeLocation is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($removeMigrateLoation)) { Write-Host '$removeMigrateLoation is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($dbUpdate)) { Write-Host '$dbUpdate is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($webprojectBinLocation)) { Write-Host '$webprojectBinLocation is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($packageName)) { Write-Host '$packageName is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 } 
+      if ([string]::IsNullOrWhiteSpace($packageOutputDir)) { Write-Host '$packageOutputDir is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 } 
+      if ([string]::IsNullOrWhiteSpace($msDeployURL)) { Write-Host '$msDeployURL is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 } 
+      if ([string]::IsNullOrWhiteSpace($msDeployUserName)) { Write-Host '$msDeployUserName is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1 } 
+      if ([string]::IsNullOrWhiteSpace($msDeployPassword)) { Write-Host '$msDeployPassword is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($webProjectLocation)) { Write-Host '$webProjectLocation is blank'  -BackgroundColor Red -ForegroundColor Black  ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($statusCheckURL)) { Write-Host '$statusCheckURL is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($MSTestLocation)) { Write-Host '$MSTestLocation is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ([string]::IsNullOrWhiteSpace($testDLLLocation)) { Write-Host '$testDLLLocation is blank'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ( $displayTaskStartStopTimes -eq $null) { Write-Host '$displayTaskStartStopTimes is null'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+      if ( $showConfigsAtStart -eq $null) { Write-Host '$showConfigsAtStart is null'  -BackgroundColor Red -ForegroundColor Black ` exit 1} 
+ }
 };
 
 task -name ListConfigs -description "Lists configs" -depends ValidateConfigs -action {

@@ -194,13 +194,17 @@ task -name MigrateDB -depends UnitTest -description "Runs migration of database"
         & $removeMigrateLoation $migrateApplicationDLL /connectionString="$migrateConnectionString" /connectionProviderName="System.Data.SqlClient" $migrateDBParams
       
         Remove-Item $removeMigrateLoation
+
+ 
     }
 };
 
+ 
 
 task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys package to environment" -action { 
     exec  {
         if ( $msBuildConfig -eq 'release') {
+           
                 msbuild $webprojectLocation `
                     /p:Configuration=$msBuildConfig `
                     /P:DeployOnBuild=True `
@@ -211,14 +215,17 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
                     /P:CreatePackageOnPublish=True `
                     /P:UserName=$msDeployUserName `
                     /P:Password=$msDeployPassword `
+                    /p:DeployIisAppPath=$deployIisAppPath  `
                     /verbosity:$msBuildVerbosity 
+
         }
         else 
         {
-            Write-Host "Cannot deploy, '$msBuildConfig'" -ForegroundColor Blue -BackgroundColor White
+            Write-Host "Cannot deploy, $msBuildConfig" -ForegroundColor Blue -BackgroundColor White
         }
     }
 };
+
 
 
 

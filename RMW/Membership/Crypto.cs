@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
-namespace RMW
+namespace RMW.Membership
 {
     public static class Crypto
     {
@@ -16,7 +16,7 @@ namespace RMW
 
         public static string GenerateSalt(int byteLength = SaltSize)
         {
-            byte[] Buff = new byte[byteLength];
+            var Buff = new byte[byteLength];
             using (var Prng = new RNGCryptoServiceProvider())
             {
                 Prng.GetBytes(Buff);

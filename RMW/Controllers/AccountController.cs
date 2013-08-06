@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.WebPages.OAuth;
 using RMW.Filters;
+using RMW.Membership;
 using RMW.Models;
 
 namespace RMW.Controllers

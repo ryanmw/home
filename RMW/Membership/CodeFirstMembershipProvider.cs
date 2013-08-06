@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Security;
 using RMW.Models;
 
-namespace RMW
+namespace RMW.Membership
 {
     public class CodeFirstMembershipProvider : MembershipProvider
     {
@@ -86,32 +84,32 @@ namespace RMW
                 return null;
             }
 
-            string HashedPassword = Crypto.HashPassword(password);
-            if (HashedPassword.Length > 128)
+            string hashedPassword = Crypto.HashPassword(password);
+            if (hashedPassword.Length > 128)
             {
                 status = MembershipCreateStatus.InvalidPassword;
                 return null;
             }
 
-            using (RMWContext Context = new RMWContext())
+            using (var Context = new RMWContext())
             {
-                if (Context.Users.Where(Usr => Usr.Username == username).Any())
+                if (Context.Users.Any(Usr => Usr.Username == username))
                 {
                     status = MembershipCreateStatus.DuplicateUserName;
                     return null;
                 }
 
-                if (Context.Users.Where(Usr => Usr.Email == email).Any())
+                if (Context.Users.Any(Usr => Usr.Email == email))
                 {
                     status = MembershipCreateStatus.DuplicateEmail;
                     return null;
                 }
 
-                User NewUser = new User
+                var NewUser = new User
                 {
                     //Id = Guid.NewGuid(),
                     Username = username,
-                    Password = HashedPassword,
+                    Password = hashedPassword,
                     IsApproved = isApproved,
                     Email = email,
                     CreateDate = DateTime.UtcNow,
@@ -127,7 +125,7 @@ namespace RMW
                 Context.Users.Add(NewUser);
                 Context.SaveChanges();
                 status = MembershipCreateStatus.Success;
-                return new MembershipUser(Membership.Provider.Name, NewUser.Username, NewUser.Id, NewUser.Email, null, null, NewUser.IsApproved, NewUser.IsLockedOut, NewUser.CreateDate.Value, NewUser.LastLoginDate.Value, NewUser.LastActivityDate.Value, NewUser.LastPasswordChangedDate.Value, NewUser.LastLockoutDate.Value);
+                return new MembershipUser(System.Web.Security.Membership.Provider.Name, NewUser.Username, NewUser.Id, NewUser.Email, null, null, NewUser.IsApproved, NewUser.IsLockedOut, NewUser.CreateDate.Value, NewUser.LastLoginDate.Value, NewUser.LastActivityDate.Value, NewUser.LastPasswordChangedDate.Value, NewUser.LastLockoutDate.Value);
             }
         }
 
@@ -146,54 +144,46 @@ namespace RMW
             {
                 return false;
             }
-            using (RMWContext Context = new RMWContext())
+            using (var Context = new RMWContext())
             {
-                User User = null;
-                User = Context.Users.FirstOrDefault(Usr => Usr.Username == username);
-                if (User == null)
+                User user = Context.Users.FirstOrDefault(Usr => Usr.Username == username);
+                if (user == null)
                 {
                     return false;
                 }
-                if (!User.IsApproved)
+                if (!user.IsApproved)
                 {
                     return false;
                 }
-                if (User.IsLockedOut)
+                if (user.IsLockedOut)
                 {
                     return false;
                 }
-                String HashedPassword = User.Password;
-                Boolean VerificationSucceeded = (HashedPassword != null && Crypto.VerifyHashedPassword(HashedPassword, password));
-                if (VerificationSucceeded)
+                var hashedPassword = user.Password;
+                var verificationSucceeded = (hashedPassword != null && Crypto.VerifyHashedPassword(hashedPassword, password));
+                if (verificationSucceeded)
                 {
-                    User.PasswordFailuresSinceLastSuccess = 0;
-                    User.LastLoginDate = DateTime.UtcNow;
-                    User.LastActivityDate = DateTime.UtcNow;
+                    user.PasswordFailuresSinceLastSuccess = 0;
+                    user.LastLoginDate = DateTime.UtcNow;
+                    user.LastActivityDate = DateTime.UtcNow;
                 }
                 else
                 {
-                    int Failures = User.PasswordFailuresSinceLastSuccess;
+                    int Failures = user.PasswordFailuresSinceLastSuccess;
                     if (Failures < MaxInvalidPasswordAttempts)
                     {
-                        User.PasswordFailuresSinceLastSuccess += 1;
-                        User.LastPasswordFailureDate = DateTime.UtcNow;
+                        user.PasswordFailuresSinceLastSuccess += 1;
+                        user.LastPasswordFailureDate = DateTime.UtcNow;
                     }
                     else if (Failures >= MaxInvalidPasswordAttempts)
                     {
-                        User.LastPasswordFailureDate = DateTime.UtcNow;
-                        User.LastLockoutDate = DateTime.UtcNow;
-                        User.IsLockedOut = true;
+                        user.LastPasswordFailureDate = DateTime.UtcNow;
+                        user.LastLockoutDate = DateTime.UtcNow;
+                        user.IsLockedOut = true;
                     }
                 }
                 Context.SaveChanges();
-                if (VerificationSucceeded)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return verificationSucceeded;
             }
         }
 
@@ -203,23 +193,24 @@ namespace RMW
             {
                 return null;
             }
-            using (RMWContext Context = new RMWContext())
+            using (var Context = new RMWContext())
             {
-                User User = null;
-                User = Context.Users.FirstOrDefault(Usr => Usr.Username == username);
-                if (User != null)
-                {
-                    if (userIsOnline)
-                    {
-                        User.LastActivityDate = DateTime.UtcNow;
-                        Context.SaveChanges();
-                    }
-                    return new MembershipUser(Membership.Provider.Name, User.Username, User.Id, User.Email, null, null, User.IsApproved, User.IsLockedOut, User.CreateDate.Value, User.LastLoginDate.Value, User.LastActivityDate.Value, User.LastPasswordChangedDate.Value, User.LastLockoutDate.Value);
-                }
-                else
+                User user = null;
+                user = Context.Users.FirstOrDefault(Usr => Usr.Username == username);
+                if (user == null)
                 {
                     return null;
                 }
+                if (userIsOnline)
+                {
+                    user.LastActivityDate = DateTime.UtcNow;
+                    Context.SaveChanges();
+                }
+                return new MembershipUser(System.Web.Security.Membership.Provider.Name, user.Username, user.Id,
+                                          user.Email, null, null, user.IsApproved, user.IsLockedOut,
+                                          user.CreateDate.Value, user.LastLoginDate.Value,
+                                          user.LastActivityDate.Value, user.LastPasswordChangedDate.Value,
+                                          user.LastLockoutDate.Value);
             }
         }
 
@@ -231,23 +222,24 @@ namespace RMW
                 return null;
             }
 
-            using (RMWContext Context = new RMWContext())
+            using (var Context = new RMWContext())
             {
-                User User = null;
-                User = Context.Users.Find(providerUserKey);
-                if (User != null)
-                {
-                    if (userIsOnline)
-                    {
-                        User.LastActivityDate = DateTime.UtcNow;
-                        Context.SaveChanges();
-                    }
-                    return new MembershipUser(Membership.Provider.Name, User.Username, User.Id, User.Email, null, null, User.IsApproved, User.IsLockedOut, User.CreateDate.Value, User.LastLoginDate.Value, User.LastActivityDate.Value, User.LastPasswordChangedDate.Value, User.LastLockoutDate.Value);
-                }
-                else
+                User user = null;
+                user = Context.Users.Find(providerUserKey);
+                if (user == null)
                 {
                     return null;
                 }
+                if (userIsOnline)
+                {
+                    user.LastActivityDate = DateTime.UtcNow;
+                    Context.SaveChanges();
+                }
+                return new MembershipUser(System.Web.Security.Membership.Provider.Name, user.Username, user.Id,
+                                          user.Email, null, null, user.IsApproved, user.IsLockedOut,
+                                          user.CreateDate.Value, user.LastLoginDate.Value,
+                                          user.LastActivityDate.Value, user.LastPasswordChangedDate.Value,
+                                          user.LastLockoutDate.Value);
             }
         }
 
@@ -265,7 +257,7 @@ namespace RMW
             {
                 return false;
             }
-            using (RMWContext Context = new RMWContext())
+            using (var Context = new RMWContext())
             {
                 User User = null;
                 User = Context.Users.FirstOrDefault(Usr => Usr.Username == username);
@@ -330,10 +322,10 @@ namespace RMW
 
         public override int GetNumberOfUsersOnline()
         {
-            DateTime DateActive = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(Convert.ToDouble(Membership.UserIsOnlineTimeWindow)));
-            using (RMWContext Context = new RMWContext())
+            var dateActive = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(Convert.ToDouble(System.Web.Security.Membership.UserIsOnlineTimeWindow)));
+            using (var context = new RMWContext())
             {
-                return Context.Users.Where(Usr => Usr.LastActivityDate > DateActive).Count();
+                return context.Users.Count(usr => usr.LastActivityDate > dateActive);
             }
         }
 
@@ -386,7 +378,7 @@ namespace RMW
                 IQueryable<User> Users = Context.Users.Where(Usr => Usr.Email == emailToMatch).OrderBy(Usrn => Usrn.Username).Skip(pageIndex * pageSize).Take(pageSize);
                 foreach (User user in Users)
                 {
-                    MembershipUsers.Add(new MembershipUser(Membership.Provider.Name, user.Username, user.Id, user.Email, null, null, user.IsApproved, user.IsLockedOut, user.CreateDate.Value, user.LastLoginDate.Value, user.LastActivityDate.Value, user.LastPasswordChangedDate.Value, user.LastLockoutDate.Value));
+                    MembershipUsers.Add(new MembershipUser(System.Web.Security.Membership.Provider.Name, user.Username, user.Id, user.Email, null, null, user.IsApproved, user.IsLockedOut, user.CreateDate.Value, user.LastLoginDate.Value, user.LastActivityDate.Value, user.LastPasswordChangedDate.Value, user.LastLockoutDate.Value));
                 }
             }
             return MembershipUsers;
@@ -401,7 +393,7 @@ namespace RMW
                 IQueryable<User> Users = Context.Users.Where(Usr => Usr.Username == usernameToMatch).OrderBy(Usrn => Usrn.Username).Skip(pageIndex * pageSize).Take(pageSize);
                 foreach (User user in Users)
                 {
-                    MembershipUsers.Add(new MembershipUser(Membership.Provider.Name, user.Username, user.Id, user.Email, null, null, user.IsApproved, user.IsLockedOut, user.CreateDate.Value, user.LastLoginDate.Value, user.LastActivityDate.Value, user.LastPasswordChangedDate.Value, user.LastLockoutDate.Value));
+                    MembershipUsers.Add(new MembershipUser(System.Web.Security.Membership.Provider.Name, user.Username, user.Id, user.Email, null, null, user.IsApproved, user.IsLockedOut, user.CreateDate.Value, user.LastLoginDate.Value, user.LastActivityDate.Value, user.LastPasswordChangedDate.Value, user.LastLockoutDate.Value));
                 }
             }
             return MembershipUsers;
@@ -416,7 +408,7 @@ namespace RMW
                 IQueryable<User> Users = Context.Users.OrderBy(Usrn => Usrn.Username).Skip(pageIndex * pageSize).Take(pageSize);
                 foreach (User user in Users)
                 {
-                    MembershipUsers.Add(new MembershipUser(Membership.Provider.Name, user.Username, user.Id, user.Email, null, null, user.IsApproved, user.IsLockedOut, user.CreateDate.Value, user.LastLoginDate.Value, user.LastActivityDate.Value, user.LastPasswordChangedDate.Value, user.LastLockoutDate.Value));
+                    MembershipUsers.Add(new MembershipUser(System.Web.Security.Membership.Provider.Name, user.Username, user.Id, user.Email, null, null, user.IsApproved, user.IsLockedOut, user.CreateDate.Value, user.LastLoginDate.Value, user.LastActivityDate.Value, user.LastPasswordChangedDate.Value, user.LastLockoutDate.Value));
                 }
             }
             return MembershipUsers;

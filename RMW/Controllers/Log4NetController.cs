@@ -47,15 +47,15 @@ namespace RMW.Controllers
         [HttpPost]
         public ActionResult Create(Log4Net log4net)
         {
-            if (ModelState.IsValid) {
-                _log4NetRepository.InsertOrUpdate(log4net);
-                _log4NetRepository.Save();
-                return RedirectToAction("Index");
-            } else {
-				return View();
-			}
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            _log4NetRepository.InsertOrUpdate(log4net);
+            _log4NetRepository.Save();
+            return RedirectToAction("Index");
         }
-        
+
         //
         // GET: /Log4Net/Edit/5
  
@@ -70,13 +70,13 @@ namespace RMW.Controllers
         [HttpPost]
         public ActionResult Edit(Log4Net log4net)
         {
-            if (ModelState.IsValid) {
-                _log4NetRepository.InsertOrUpdate(log4net);
-                _log4NetRepository.Save();
-                return RedirectToAction("Index");
-            } else {
-				return View();
-			}
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            _log4NetRepository.InsertOrUpdate(log4net);
+            _log4NetRepository.Save();
+            return RedirectToAction("Index");
         }
 
         //

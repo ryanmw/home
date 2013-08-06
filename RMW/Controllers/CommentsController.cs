@@ -11,6 +11,7 @@ namespace RMW.Controllers
 		// If you are using Dependency Injection, you can delete the following constructor
         public CommentsController() : this(new ArticleRepository(), new CommentRepository())
         {
+           
         }
 
         public CommentsController(IArticleRepository articleRepository, ICommentRepository commentRepository)

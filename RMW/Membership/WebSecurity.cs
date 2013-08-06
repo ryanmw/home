@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using System.Web.Security;
-using RMW;
 using RMW.Models;
+ 
 
-namespace RMW
+namespace RMW.Membership
 {
 
     public sealed class WebSecurity
@@ -40,15 +40,13 @@ namespace RMW
         public static MembershipCreateStatus Register(string Username, string Password, string Email, bool IsApproved, string FirstName, string LastName)
         {
             MembershipCreateStatus CreateStatus;
-            Membership.CreateUser(Username, Password, Email, null, null, IsApproved, Guid.NewGuid(), out CreateStatus);
+            System.Web.Security.Membership.CreateUser(Username, Password, Email, null, null, IsApproved, Guid.NewGuid(), out CreateStatus);
 
             if (CreateStatus == MembershipCreateStatus.Success)
             {
-                using (RMWContext Context = new RMWContext())
+                using (var Context = new RMWContext())
                 {
-                    RMW.Models.User User = Context.Users.FirstOrDefault(Usr => Usr.Username == Username);
-                    //User.FirstName = FirstName;
-                    //User.LastName = LastName;
+                    var User = Context.Users.FirstOrDefault(Usr => Usr.Username == Username);
                     Context.SaveChanges();
                 }
 
@@ -64,7 +62,7 @@ namespace RMW
         public static Boolean Login(string Username, string Password, bool persistCookie = false)
         {
 
-            bool success = Membership.ValidateUser(Username, Password);
+            bool success = System.Web.Security.Membership.ValidateUser(Username, Password);
             if (success)
             {
                 FormsAuthentication.SetAuthCookie(Username, persistCookie);
@@ -80,7 +78,7 @@ namespace RMW
 
         public static MembershipUser GetUser(string Username)
         {
-            return Membership.GetUser(Username);
+            return System.Web.Security.Membership.GetUser(Username);
         }
 
         public static bool ChangePassword(string userName, string currentPassword, string newPassword)
@@ -88,7 +86,7 @@ namespace RMW
             bool success = false;
             try
             {
-                MembershipUser currentUser = Membership.GetUser(userName, true);
+                MembershipUser currentUser = System.Web.Security.Membership.GetUser(userName, true);
                 success = currentUser.ChangePassword(currentPassword, newPassword);
             }
             catch (ArgumentException)
@@ -101,12 +99,12 @@ namespace RMW
 
         public static bool DeleteUser(string Username)
         {
-            return Membership.DeleteUser(Username);
+            return System.Web.Security.Membership.DeleteUser(Username);
         }
 
         public static int GetUserId(string userName)
         {
-            MembershipUser user = Membership.GetUser(userName);
+            MembershipUser user = System.Web.Security.Membership.GetUser(userName);
             return (int)user.ProviderUserKey;
         }
 
@@ -117,7 +115,7 @@ namespace RMW
 
         public static string CreateAccount(string userName, string password, bool requireConfirmationToken = false)
         {
-            CodeFirstMembershipProvider CodeFirstMembership = Membership.Provider as CodeFirstMembershipProvider;
+            CodeFirstMembershipProvider CodeFirstMembership = System.Web.Security.Membership.Provider as CodeFirstMembershipProvider;
             return CodeFirstMembership.CreateAccount(userName, password, requireConfirmationToken);
         }
 
@@ -138,7 +136,7 @@ namespace RMW
 
         public static string CreateUserAndAccount(string userName, string password, object propertyValues = null, bool requireConfirmationToken = false)
         {
-            CodeFirstMembershipProvider CodeFirstMembership = Membership.Provider as CodeFirstMembershipProvider;
+            CodeFirstMembershipProvider CodeFirstMembership = System.Web.Security.Membership.Provider as CodeFirstMembershipProvider;
 
             IDictionary<string, object> values = null;
             if (propertyValues != null)
@@ -152,19 +150,19 @@ namespace RMW
         public static List<MembershipUser> FindUsersByEmail(string Email, int PageIndex, int PageSize)
         {
             int totalRecords;
-            return Membership.FindUsersByEmail(Email, PageIndex, PageSize, out totalRecords).Cast<MembershipUser>().ToList();
+            return System.Web.Security.Membership.FindUsersByEmail(Email, PageIndex, PageSize, out totalRecords).Cast<MembershipUser>().ToList();
         }
 
         public static List<MembershipUser> FindUsersByName(string Username, int PageIndex, int PageSize)
         {
             int totalRecords;
-            return Membership.FindUsersByName(Username, PageIndex, PageSize, out totalRecords).Cast<MembershipUser>().ToList();
+            return System.Web.Security.Membership.FindUsersByName(Username, PageIndex, PageSize, out totalRecords).Cast<MembershipUser>().ToList();
         }
 
         public static List<MembershipUser> GetAllUsers(int PageIndex, int PageSize)
         {
             int totalRecords;
-            return Membership.GetAllUsers(PageIndex, PageSize, out totalRecords).Cast<MembershipUser>().ToList();
+            return System.Web.Security.Membership.GetAllUsers(PageIndex, PageSize, out totalRecords).Cast<MembershipUser>().ToList();
         }
 
         public static void InitializeDatabaseConnection(string connectionStringName, string userTableName, string userIdColumn, string userNameColumn, bool autoCreateTables)

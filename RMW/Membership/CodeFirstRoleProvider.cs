@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Data.Entity;
 using System.Web.Security;
 using RMW.Models;
 
-namespace RMW
+namespace RMW.Membership
 {
 
     public class CodeFirstRoleProvider : RoleProvider

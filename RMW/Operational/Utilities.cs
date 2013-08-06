@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace RMW.Operational
 {
@@ -17,19 +13,24 @@ namespace RMW.Operational
         /// <returns></returns>
         public static string WebSafeMaker(string p)
         {
-            string pname = Regex.Replace(p, @"[\W_-[#]]+", " ");
-            return pname.Trim().Replace("  ", " ").Replace(" ", "-").Replace("%", string.Empty).ToLowerInvariant(); // TODO: FULL REGEX
+            var pname = Regex.Replace(p, @"[\W_-[#]]+", " ");
+            return pname.Trim().Replace("  ", " ").Replace(" ", "-").Replace("%", string.Empty).ToLowerInvariant();
         }
 
 
-        private static Random rand = new Random();
+        private static readonly Random Rand = new Random();
 
         public static int RandomNumber(int min, int max)
         {
-            int t = rand.Next(min, max);
+            var t = Rand.Next(min, max);
             return t;
         }
 
+        /// <summary>
+        /// A simple bot prevention technique
+        /// </summary>
+        /// <param name="nvc"></param>
+        /// <returns></returns>
         public static bool IsCaptchaValid(NameValueCollection nvc)
         {
             if (!string.IsNullOrWhiteSpace(nvc["num1"]) &&
@@ -37,14 +38,13 @@ namespace RMW.Operational
               !string.IsNullOrWhiteSpace(nvc["userans"])
               )
             {
-                int num1 = 0;
-                int num2 = 0;
-                int userans = 0;
-
+                int num1;
                 if (int.TryParse(nvc["num1"], out num1))
                 {
+                    int num2;
                     if (int.TryParse(nvc["num2"], out num2))
                     {
+                        int userans;
                         if (int.TryParse(nvc["userans"], out userans))
                         {
                             if (num1 + num2 == userans)
@@ -53,9 +53,7 @@ namespace RMW.Operational
                             }
 
                         }
-
                     }
-
                 }
             }
             return false;

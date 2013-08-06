@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using RMW.Models;
 
@@ -9,8 +5,8 @@ namespace RMW.Controllers
 {   
     public class CommentsController : Controller
     {
-		private readonly IArticleRepository articleRepository;
-		private readonly ICommentRepository commentRepository;
+		private readonly IArticleRepository _articleRepository;
+		private readonly ICommentRepository _commentRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
         public CommentsController() : this(new ArticleRepository(), new CommentRepository())
@@ -19,8 +15,8 @@ namespace RMW.Controllers
 
         public CommentsController(IArticleRepository articleRepository, ICommentRepository commentRepository)
         {
-			this.articleRepository = articleRepository;
-			this.commentRepository = commentRepository;
+			this._articleRepository = articleRepository;
+			this._commentRepository = commentRepository;
         }
 
         //
@@ -28,7 +24,7 @@ namespace RMW.Controllers
 
         public ViewResult Index()
         {
-            return View(commentRepository.All);
+            return View(_commentRepository.All);
         }
 
         //
@@ -36,7 +32,7 @@ namespace RMW.Controllers
 
         public ViewResult Details(int id)
         {
-            return View(commentRepository.Find(id));
+            return View(_commentRepository.Find(id));
         }
 
         //
@@ -44,7 +40,7 @@ namespace RMW.Controllers
 
         public ActionResult Create()
         {
-			ViewBag.PossibleArticles = articleRepository.All;
+			ViewBag.PossibleArticles = _articleRepository.All;
             return View();
         } 
 
@@ -55,11 +51,11 @@ namespace RMW.Controllers
         public ActionResult Create(Comment comment)
         {
             if (ModelState.IsValid) {
-                commentRepository.InsertOrUpdate(comment);
-                commentRepository.Save();
+                _commentRepository.InsertOrUpdate(comment);
+                _commentRepository.Save();
                 return RedirectToAction("Index");
             } else {
-				ViewBag.PossibleArticles = articleRepository.All;
+				ViewBag.PossibleArticles = _articleRepository.All;
 				return View();
 			}
         }
@@ -69,8 +65,8 @@ namespace RMW.Controllers
  
         public ActionResult Edit(int id)
         {
-			ViewBag.PossibleArticles = articleRepository.All;
-             return View(commentRepository.Find(id));
+			ViewBag.PossibleArticles = _articleRepository.All;
+             return View(_commentRepository.Find(id));
         }
 
         //
@@ -80,11 +76,11 @@ namespace RMW.Controllers
         public ActionResult Edit(Comment comment)
         {
             if (ModelState.IsValid) {
-                commentRepository.InsertOrUpdate(comment);
-                commentRepository.Save();
+                _commentRepository.InsertOrUpdate(comment);
+                _commentRepository.Save();
                 return RedirectToAction("Index");
             } else {
-				ViewBag.PossibleArticles = articleRepository.All;
+				ViewBag.PossibleArticles = _articleRepository.All;
 				return View();
 			}
         }
@@ -94,7 +90,7 @@ namespace RMW.Controllers
  
         public ActionResult Delete(int id)
         {
-            return View(commentRepository.Find(id));
+            return View(_commentRepository.Find(id));
         }
 
         //
@@ -103,8 +99,8 @@ namespace RMW.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            commentRepository.Delete(id);
-            commentRepository.Save();
+            _commentRepository.Delete(id);
+            _commentRepository.Save();
 
             return RedirectToAction("Index");
         }
@@ -112,8 +108,8 @@ namespace RMW.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing) {
-                articleRepository.Dispose();
-                commentRepository.Dispose();
+                _articleRepository.Dispose();
+                _commentRepository.Dispose();
             }
             base.Dispose(disposing);
         }

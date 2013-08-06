@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Diagnostics;
 
-namespace RMW.ConsoleMigrator
+namespace ConsoleMigrator
 {
     class Program
     {
-        static string argmument = @"RMW.dll /connectionString=""{0}"" /connectionProviderName=""System.Data.SqlClient"" /verbose";
-        static string dbCon = "";
+        private const string Argmument = @"RMW.dll /connectionString=""{0}"" /connectionProviderName=""System.Data.SqlClient"" /verbose";
+        private const string DbCon = "";
 
         public static void Main(params string[] args)
         {
-            var exitCode = RunMigrateExe(dbCon);
+            var exitCode = RunMigrateExe(DbCon);
             Environment.Exit(exitCode);
         }
 
@@ -30,10 +27,10 @@ namespace RMW.ConsoleMigrator
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
                 UseShellExecute = false,
-                Arguments = string.Format(argmument, dbCon)
+                Arguments = string.Format(Argmument, dbCon)
             };
 
-            int exitCode = -1;
+            var exitCode = -1;
 
             try
             {

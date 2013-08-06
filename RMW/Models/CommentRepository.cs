@@ -1,27 +1,25 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
-using RMW.DataLayer;
 
 namespace RMW.Models
-{ 
+{
     public class CommentRepository : ICommentRepository
     {
-        RMWContext context = new RMWContext();
+        readonly RMWContext _context = new RMWContext();
 
         public IQueryable<Comment> All
         {
-            get { return context.Comments; }
+            get { return _context.Comments; }
         }
 
         public IQueryable<Comment> AllIncluding(params Expression<Func<Comment, object>>[] includeProperties)
         {
-            IQueryable<Comment> query = context.Comments;
-            foreach (var includeProperty in includeProperties) {
+            IQueryable<Comment> query = _context.Comments;
+            foreach (var includeProperty in includeProperties)
+            {
                 query = query.Include(includeProperty);
             }
             return query;
@@ -29,34 +27,37 @@ namespace RMW.Models
 
         public Comment Find(int id)
         {
-            return context.Comments.Find(id);
+            return _context.Comments.Find(id);
         }
 
         public void InsertOrUpdate(Comment comment)
         {
-            if (comment.Id == default(int)) {
+            if (comment.Id == default(int))
+            {
                 // New entity
-                context.Comments.Add(comment);
-            } else {
+                _context.Comments.Add(comment);
+            }
+            else
+            {
                 // Existing entity
-                context.Entry(comment).State = EntityState.Modified;
+                _context.Entry(comment).State = EntityState.Modified;
             }
         }
 
         public void Delete(int id)
         {
-            var comment = context.Comments.Find(id);
-            context.Comments.Remove(comment);
+            var comment = _context.Comments.Find(id);
+            _context.Comments.Remove(comment);
         }
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
-            context.Dispose( );
+            _context.Dispose();
         }
     }
 

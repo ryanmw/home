@@ -19,14 +19,13 @@
         	
         <ul class="no_item_type">
             <li> <i>Published:	@item.CreatedOn.ToString("yyyy-MM-dd") | @if (item.Comments != null && item.Comments.Count > 0)
-                                                                        {
-                                                                            <a href="@item.URLTo#comments">Comments: @item.Comments.Count</a>
-                                                                        }
-                else 
-                {
-                                                                            <text>Comments:</text>
-                                                                          @item.Comments.Count.ToString()     
-                                                                        }
+	                                                                       {
+	                                                                           <a href="@item.URLTo#comments">Comments: @item.Comments.Count</a>
+	                                                                       }
+	                                                                       else
+	                                                                       {
+	                                                                           <text>Comments: 0 </text>
+	                                                                       }
                                                                   </i></li>
             <li>
 

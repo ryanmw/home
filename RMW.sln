@@ -1,12 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW", "RMW\RMW.csproj", "{39F44C7F-4B70-495E-9E63-3CE8F049F9C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW.Tests", "RMW.Tests\RMW.Tests.csproj", "{C7EFF79E-E33A-4DD4-8F7A-87AC67EA8150}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMigrator", "ConsoleMigrator\ConsoleMigrator.csproj", "{44379FB7-223E-4DFE-8858-C43F085BE451}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{26AC70D3-EDC6-4B8D-B890-C452AE942E14}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -14,17 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{26AC70
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "WindowsAzure2", "WindowsAzure2\WindowsAzure2.ccproj", "{2A128133-1A40-4490-911E-3925D4A7E423}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW", "RMW\RMW.csproj", "{39F44C7F-4B70-495E-9E63-3CE8F049F9C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerRole1", "WorkerRole1\WorkerRole1.csproj", "{0BF82038-AB31-4E03-A922-09CE3D65048B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW.Tests", "RMW.Tests\RMW.Tests.csproj", "{C7EFF79E-E33A-4DD4-8F7A-87AC67EA8150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheWorkerRole1", "CacheWorkerRole1\CacheWorkerRole1.csproj", "{729ECC7E-D453-4D6C-8759-3132F69B0149}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebRole1", "WebRole1\WebRole1.csproj", "{7A9293B0-A763-487B-96E3-7B9A3069FFAF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcWebRole1", "MvcWebRole1\MvcWebRole1.csproj", "{64C8803F-7936-4584-AF9E-77B2B53BDD9A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcWebRole1.Tests", "MvcWebRole1.Tests\MvcWebRole1.Tests.csproj", "{42C2E7BD-3D0D-4BEB-9B03-4AFB6C5FE37C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMigrator", "ConsoleMigrator\ConsoleMigrator.csproj", "{44379FB7-223E-4DFE-8858-C43F085BE451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,30 +32,6 @@ Global
 		{44379FB7-223E-4DFE-8858-C43F085BE451}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44379FB7-223E-4DFE-8858-C43F085BE451}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44379FB7-223E-4DFE-8858-C43F085BE451}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A128133-1A40-4490-911E-3925D4A7E423}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A128133-1A40-4490-911E-3925D4A7E423}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A128133-1A40-4490-911E-3925D4A7E423}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A128133-1A40-4490-911E-3925D4A7E423}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BF82038-AB31-4E03-A922-09CE3D65048B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BF82038-AB31-4E03-A922-09CE3D65048B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BF82038-AB31-4E03-A922-09CE3D65048B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BF82038-AB31-4E03-A922-09CE3D65048B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{729ECC7E-D453-4D6C-8759-3132F69B0149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{729ECC7E-D453-4D6C-8759-3132F69B0149}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{729ECC7E-D453-4D6C-8759-3132F69B0149}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{729ECC7E-D453-4D6C-8759-3132F69B0149}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A9293B0-A763-487B-96E3-7B9A3069FFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A9293B0-A763-487B-96E3-7B9A3069FFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A9293B0-A763-487B-96E3-7B9A3069FFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A9293B0-A763-487B-96E3-7B9A3069FFAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64C8803F-7936-4584-AF9E-77B2B53BDD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64C8803F-7936-4584-AF9E-77B2B53BDD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64C8803F-7936-4584-AF9E-77B2B53BDD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64C8803F-7936-4584-AF9E-77B2B53BDD9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42C2E7BD-3D0D-4BEB-9B03-4AFB6C5FE37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42C2E7BD-3D0D-4BEB-9B03-4AFB6C5FE37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42C2E7BD-3D0D-4BEB-9B03-4AFB6C5FE37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42C2E7BD-3D0D-4BEB-9B03-4AFB6C5FE37C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

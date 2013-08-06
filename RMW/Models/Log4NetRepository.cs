@@ -1,62 +1,59 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
-using RMW.DataLayer;
 
 namespace RMW.Models
 { 
+    /// <summary>
+    /// Provides a repository log messages
+    /// </summary>
     public class Log4NetRepository : ILog4NetRepository
     {
-        RMWContext context = new RMWContext();
+        readonly RMWContext _context = new RMWContext();
 
         public IQueryable<Log4Net> All
         {
-            get { return context.Log4Net; }
+            get { return _context.Log4Net; }
         }
 
         public IQueryable<Log4Net> AllIncluding(params Expression<Func<Log4Net, object>>[] includeProperties)
         {
-            IQueryable<Log4Net> query = context.Log4Net;
-            foreach (var includeProperty in includeProperties) {
-                query = query.Include(includeProperty);
-            }
-            return query;
+            return includeProperties.Aggregate<Expression<Func<Log4Net, object>>,
+                IQueryable<Log4Net>>(_context.Log4Net, (current, includeProperty) => current.Include(includeProperty));
         }
 
         public Log4Net Find(int id)
         {
-            return context.Log4Net.Find(id);
+            return _context.Log4Net.Find(id);
         }
 
-        public void InsertOrUpdate(Log4Net log4net)
+        public void InsertOrUpdate(Log4Net log4Net)
         {
-            if (log4net.ID == default(int)) {
+            if (log4Net.ID == default(int)) {
                 // New entity
-                context.Log4Net.Add(log4net);
+                _context.Log4Net.Add(log4Net);
             } else {
                 // Existing entity
-                context.Entry(log4net).State = EntityState.Modified;
+                _context.Entry(log4Net).State = EntityState.Modified;
             }
         }
 
         public void Delete(int id)
         {
-            var log4net = context.Log4Net.Find(id);
-            context.Log4Net.Remove(log4net);
+            var log4Net = _context.Log4Net.Find(id);
+            _context.Log4Net.Remove(log4Net);
         }
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Dispose() 
         {
-            context.Dispose();
+            _context.Dispose();
         }
     }
 
@@ -65,7 +62,7 @@ namespace RMW.Models
         IQueryable<Log4Net> All { get; }
         IQueryable<Log4Net> AllIncluding(params Expression<Func<Log4Net, object>>[] includeProperties);
         Log4Net Find(int id);
-        void InsertOrUpdate(Log4Net log4net);
+        void InsertOrUpdate(Log4Net log4Net);
         void Delete(int id);
         void Save();
     }

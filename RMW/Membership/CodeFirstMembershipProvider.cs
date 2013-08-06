@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Security;
-using RMW.DataLayer;
 using RMW.Models;
 
 namespace RMW

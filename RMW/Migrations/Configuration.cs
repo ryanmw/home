@@ -1,10 +1,11 @@
+using RMW.Models;
+
 namespace RMW.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using RMW.DataLayer;
 
     internal sealed class Configuration : DbMigrationsConfiguration< RMWContext >
     {

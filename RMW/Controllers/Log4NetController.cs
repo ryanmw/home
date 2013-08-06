@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using RMW.Models;
 
@@ -9,16 +5,16 @@ namespace RMW.Controllers
 {   
     public class Log4NetController : Controller
     {
-		private readonly ILog4NetRepository log4netRepository;
+		private readonly ILog4NetRepository _log4NetRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
         public Log4NetController() : this(new Log4NetRepository())
         {
         }
 
-        public Log4NetController(ILog4NetRepository log4netRepository)
+        public Log4NetController(ILog4NetRepository log4NetRepository)
         {
-			this.log4netRepository = log4netRepository;
+			this._log4NetRepository = log4NetRepository;
         }
 
         //
@@ -26,7 +22,7 @@ namespace RMW.Controllers
 
         public ViewResult Index()
         {
-            return View(log4netRepository.All);
+            return View(_log4NetRepository.All);
         }
 
         //
@@ -34,7 +30,7 @@ namespace RMW.Controllers
 
         public ViewResult Details(int id)
         {
-            return View(log4netRepository.Find(id));
+            return View(_log4NetRepository.Find(id));
         }
 
         //
@@ -52,8 +48,8 @@ namespace RMW.Controllers
         public ActionResult Create(Log4Net log4net)
         {
             if (ModelState.IsValid) {
-                log4netRepository.InsertOrUpdate(log4net);
-                log4netRepository.Save();
+                _log4NetRepository.InsertOrUpdate(log4net);
+                _log4NetRepository.Save();
                 return RedirectToAction("Index");
             } else {
 				return View();
@@ -65,7 +61,7 @@ namespace RMW.Controllers
  
         public ActionResult Edit(int id)
         {
-             return View(log4netRepository.Find(id));
+             return View(_log4NetRepository.Find(id));
         }
 
         //
@@ -75,8 +71,8 @@ namespace RMW.Controllers
         public ActionResult Edit(Log4Net log4net)
         {
             if (ModelState.IsValid) {
-                log4netRepository.InsertOrUpdate(log4net);
-                log4netRepository.Save();
+                _log4NetRepository.InsertOrUpdate(log4net);
+                _log4NetRepository.Save();
                 return RedirectToAction("Index");
             } else {
 				return View();
@@ -88,7 +84,7 @@ namespace RMW.Controllers
  
         public ActionResult Delete(int id)
         {
-            return View(log4netRepository.Find(id));
+            return View(_log4NetRepository.Find(id));
         }
 
         //
@@ -97,8 +93,8 @@ namespace RMW.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            log4netRepository.Delete(id);
-            log4netRepository.Save();
+            _log4NetRepository.Delete(id);
+            _log4NetRepository.Save();
 
             return RedirectToAction("Index");
         }
@@ -106,7 +102,7 @@ namespace RMW.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing) {
-                log4netRepository.Dispose();
+                _log4NetRepository.Dispose();
             }
             base.Dispose(disposing);
         }

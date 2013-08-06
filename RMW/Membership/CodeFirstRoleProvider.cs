@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Data.Entity;
 using System.Web.Security;
-using RMW.DataLayer;
 using RMW.Models;
 
 namespace RMW

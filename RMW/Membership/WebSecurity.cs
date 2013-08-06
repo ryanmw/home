@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.Security;
 using RMW;
-using RMW.DataLayer;
+using RMW.Models;
 
 namespace RMW
 {

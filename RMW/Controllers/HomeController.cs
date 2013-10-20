@@ -6,7 +6,7 @@ namespace RMW.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Articles");
         }
 
         public ActionResult Portfolio()

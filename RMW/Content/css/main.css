@@ -698,3 +698,6 @@ a.h_img:hover img
     padding-left: 0;
     margin-left: 0;
 }
+
+.home_title { color: #ffffff; text-decoration: none;text-shadow: 1px 1px #696969;margin-bottom:0;}
+.no_margin { margin: 0;}

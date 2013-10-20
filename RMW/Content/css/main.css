@@ -83,18 +83,19 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #008500;
+    border-bottom: 20px solid #000;
+    border-bottom-color: #1B1B1B;
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #008500;
+    border-top: 20px solid #252525;
 }
 
 .header-container,
 .footer-container,
 .main aside {
-    background:#269926;
+    background:#121212;
 }
 
 
@@ -122,7 +123,7 @@ nav a {
     font-weight: bold;
 
     color: white;
-    background: #008500;
+    background: #202020;
 }
 
 nav a:hover,
@@ -147,8 +148,12 @@ nav a:hover {
 }
 
 .main aside {
-    color: #202020;
+    color: #ededed;
     padding: 0px 5% 10px;
+}
+
+.main aside b {
+    color: #cccccc;
 }
 
 .footer-container footer {
@@ -529,12 +534,11 @@ article a:active
 }
 
 
-nav li a:hover
-{
-  background-color:#5DFC0A;
-  text-decoration:none;
-  color: #000 !important;
-  text-shadow:none;
+nav li a:hover {
+    background-color: #9fee00;
+    text-decoration: none;
+    color: #000 !important;
+    text-shadow: none;
 }
 
 nav li a:active
@@ -548,7 +552,7 @@ nav li a:active
 .active_menu
 {
     
-    background-color:#61B329;
+    background-color:#252525;
 }
 
 
@@ -591,7 +595,7 @@ aside a:hover
 
 .title a:hover
 {
-    color:#5DFC0A !important;
+    color:#9fee00 !important;
 }
     .title a
     {
@@ -601,7 +605,7 @@ aside a:hover
 
 footer.wrapper p
 {
-    color: #000;
+    color: #FFF;
 }
  
 
@@ -632,7 +636,7 @@ margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 pre
 {
     background-color: #000;
-    color: lime;
+    color: #00FF1E;
     padding:3px;
     font-size:.8em;
 }

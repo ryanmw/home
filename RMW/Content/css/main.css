@@ -584,8 +584,13 @@ aside a:hover
 .no_item_type
 {
     list-style-type: none;
- 
+     
 }
+ul.no_item_type
+{
+    padding: 0;     
+}
+    
 
 .title
 {

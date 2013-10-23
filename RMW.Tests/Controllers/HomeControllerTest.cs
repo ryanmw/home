@@ -1,28 +1,60 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Specialized;
+using System.Web;
+using FakeItEasy;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using RMW.Controllers;
 using System.Web.Mvc;
+using RMW.Models;
+
 
 namespace RMW.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
     {
-        [Ignore]// TODO: MOCK HTTPCONTEXT FOR ARTICLES
         [TestMethod]
-        public void Index()
+        public void Index_IsRequested_IsNotNull()
         {
             // Arrange
-            var controller = new ArticlesController();
+            var mockHttpContext = new Mock<HttpContextBase>();
+            mockHttpContext.Setup(x => x.Request.QueryString).Returns(new NameValueCollection());
+            var articles = new Fake<IArticleRepository>();
+            var comments = new Fake<ICommentRepository>();
+            var controller = new ArticlesController(
+                articles.FakedObject, comments.FakedObject, mockHttpContext.Object);
+
+            A.CallTo(() => controller._articleRepository.GetsArticles(A<int>.Ignored, A<int>.Ignored)).Returns(null);
 
             // Act
-            var result = controller.Index() as ViewResult;
+            var result = controller.Index();
 
             // Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void About()
+        public void Index_IsRequested_ReturnsViewResult()
+        {
+            // Arrange
+            var mockHttpContext = new Mock<HttpContextBase>();
+            mockHttpContext.Setup(x => x.Request.QueryString).Returns(new NameValueCollection());
+            var articles = new Fake<IArticleRepository>();
+            var comments = new Fake<ICommentRepository>();
+            var controller = new ArticlesController(
+                articles.FakedObject, comments.FakedObject, mockHttpContext.Object);
+            A.CallTo(() => controller._articleRepository.GetsArticles(A<int>.Ignored, A<int>.Ignored)).Returns(null);
+
+            // Act
+            var result = controller.Index();
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void About_IsRequested_IsNotNull()
         {
             // Arrange
             var controller = new HomeController();
@@ -36,7 +68,7 @@ namespace RMW.Tests.Controllers
 
 
         [TestMethod]
-        public void Contact()
+        public void Contact_IsRequested_IsNotNull()
         {
             // Arrange
             var controller = new HomeController();

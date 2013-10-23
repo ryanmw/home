@@ -52,7 +52,7 @@ namespace RMW.Models
         public virtual ICollection<User> Users { get; set; }
     }
 
-    public sealed class Article
+    public class Article
     {
         public int Id { get; set; }
 

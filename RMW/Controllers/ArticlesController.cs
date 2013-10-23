@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using System.Web.Mvc;
 using RMW.Models;
 using RMW.Operational;
@@ -10,18 +11,26 @@ namespace RMW.Controllers
     {
         const int PageSize = 10;
 
-        private readonly IArticleRepository _articleRepository;
+        public IArticleRepository _articleRepository;
 
         private readonly ICommentRepository _commentRepository;
 
+        private readonly HttpContextBase _httpContext; 
+
         // If you are using Dependency Injection, you can delete the following constructor
         public ArticlesController()
-            : this(new ArticleRepository(), new CommentRepository())
+            : this(new ArticleRepository(), 
+            new CommentRepository(),
+            new HttpContextWrapper(System.Web.HttpContext.Current))
         {
         }
 
-        public ArticlesController(IArticleRepository articleRepository, ICommentRepository commentRepository)
+        public ArticlesController(
+            IArticleRepository articleRepository, 
+            ICommentRepository commentRepository,
+            HttpContextBase baseContext)
         {
+            this._httpContext        = baseContext;
             this._articleRepository = articleRepository;
             this._commentRepository = commentRepository;
         }
@@ -33,7 +42,7 @@ namespace RMW.Controllers
         {
             var currentPage = 1;
 
-            if (!int.TryParse(Request.QueryString["page"], out currentPage)) currentPage = 1;
+            if (!int.TryParse(_httpContext.Request.QueryString["page"], out currentPage)) currentPage = 1;
 
             var articleList = _articleRepository.GetsArticles(currentPage, PageSize);
  

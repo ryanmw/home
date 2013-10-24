@@ -116,11 +116,6 @@ task -name ValidateConfigs -depends  ListConfigs   -description "Validates that 
     "showConfigsAtStart is null"  
     assert( $migrationProjectBinLocation -ne $null ) `
     "migrationProjectBinLocation is null"  
-
-
-    
- 
- 
 };
 
 task -name ListConfigs -description "Lists configs"   -action {
@@ -157,14 +152,14 @@ task -name ListConfigs -description "Lists configs"   -action {
 
 task -name Build -description "Build the solution" -depends ValidateConfigs, ListConfigs -action { 
     exec  {
-        msbuild $solutionLocation /t:build /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig
+        msbuild $solutionLocation /t:build /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig /nologo
     }
 };
 
 task -name Clean -description "Cleans the solution" -depends ValidateConfigs -action { 
     exec  {
     
-        msbuild $solutionLocation /t:clean /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig
+        msbuild $solutionLocation /t:clean /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig /nologo
     }
 };
 
@@ -180,7 +175,7 @@ task -name UnitTest -depends Rebuild -description "Runs unit tests" -action {
 
 task -name PackageZip -depends UnitTest -description "Makes a zip package" -action { 
     exec  {
-     msbuild $webProjectLocation /t:Package /verbosity:$msBuildVerbosity /p:Configuration=$msBuildConfig /p:OutDir=$packageOutputDir
+     msbuild $webProjectLocation /t:Package /verbosity:$msBuildVerbosity /p:Configuration=$msBuildConfig /p:OutDir=$packageOutputDir /nologo
   }
 };
 
@@ -211,7 +206,8 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
                     /P:UserName=$msDeployUserName `
                     /P:Password=$msDeployPassword `
                     /p:DeployIisAppPath=$deployIisAppPath  `
-                    /verbosity:$msBuildVerbosity 
+                    /verbosity:$msBuildVerbosity `
+		    /nologo
 
         }
         else 

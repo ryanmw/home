@@ -1,7 +1,7 @@
 using System.Web.Mvc;
 using RMW.Models;
 
-namespace RMW.Controllers
+namespace RMW.Web.Controllers
 {   
     public class CommentsController : Controller
     {

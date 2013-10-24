@@ -8,11 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{26AC70
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW", "RMW\RMW.csproj", "{39F44C7F-4B70-495E-9E63-3CE8F049F9C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW.Web", "RMW.Web\RMW.Web.csproj", "{39F44C7F-4B70-495E-9E63-3CE8F049F9C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW.Tests", "RMW.Tests\RMW.Tests.csproj", "{C7EFF79E-E33A-4DD4-8F7A-87AC67EA8150}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMigrator", "ConsoleMigrator\ConsoleMigrator.csproj", "{44379FB7-223E-4DFE-8858-C43F085BE451}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{80801C53-87B8-4D7C-A65D-97666962611C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMW.Models", "RMW.Models\RMW.Models.csproj", "{EB4CDC20-F632-4B15-B9FC-BA51C78E1EA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,8 +36,15 @@ Global
 		{44379FB7-223E-4DFE-8858-C43F085BE451}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44379FB7-223E-4DFE-8858-C43F085BE451}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44379FB7-223E-4DFE-8858-C43F085BE451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4CDC20-F632-4B15-B9FC-BA51C78E1EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4CDC20-F632-4B15-B9FC-BA51C78E1EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4CDC20-F632-4B15-B9FC-BA51C78E1EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4CDC20-F632-4B15-B9FC-BA51C78E1EA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C7EFF79E-E33A-4DD4-8F7A-87AC67EA8150} = {80801C53-87B8-4D7C-A65D-97666962611C}
 	EndGlobalSection
 EndGlobal

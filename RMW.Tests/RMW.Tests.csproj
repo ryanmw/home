@@ -110,9 +110,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RMW\RMW.csproj">
+    <ProjectReference Include="..\RMW.Models\RMW.Models.csproj">
+      <Project>{eb4cdc20-f632-4b15-b9fc-ba51c78e1ea1}</Project>
+      <Name>RMW.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMW.Web\RMW.Web.csproj">
       <Project>{39f44c7f-4b70-495e-9e63-3ce8f049f9c3}</Project>
-      <Name>RMW</Name>
+      <Name>RMW.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

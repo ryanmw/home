@@ -4,9 +4,9 @@ using System.Web;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using RMW.Controllers;
 using System.Web.Mvc;
 using RMW.Models;
+using RMW.Web.Controllers;
 
 
 namespace RMW.Tests.Controllers

@@ -8,7 +8,7 @@ using RMW.Filters;
 using RMW.Membership;
 using RMW.Models;
 
-namespace RMW.Controllers
+namespace RMW.Web.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]

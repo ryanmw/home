@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using RMW.Models;
 using RMW.Operational;
 
-namespace RMW.Controllers
+namespace RMW.Web.Controllers
 {
 
     public class ArticlesController : Controller

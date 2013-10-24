@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace RMW.Controllers
+namespace RMW.Web.Controllers
 {
     public class HomeController : Controller
     {

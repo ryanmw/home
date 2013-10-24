@@ -1,8 +1,6 @@
-
-if ( Test-Path .\configs.ps1 )
-{
-    Include ".\configs.ps1"
-}
+######################################
+# Continuous Deployment Script
+######################################
 
 properties {
  
@@ -19,6 +17,7 @@ properties {
     if ( $removeMigrateLoation -eq $null) { $removeMigrateLoation = ''}
     if ( $dbUpdate -eq $null){$dbUpdate = ''}
     if ( $webprojectBinLocation -eq $null) { $webprojectBinLocation = ''}
+    if ( $migrationProjectBinLocation -eq $null) { $migrationProjectBinLocation = ''}    
   
     #Package
     if ( $packageName -eq $null){ $packageName = ''}
@@ -30,8 +29,7 @@ properties {
     if ( $msDeployPassword -eq $null) {$msDeployPassword = ''}
     if ( $webProjectLocation -eq $null){ $webProjectLocation = '' }
     if (  $statusCheckURL -eq $null){$statusCheckURL = '' }
-    if (  $deployIisAppPath -eq $null){$deployIisAppPath = '' }
-    
+    if (  $deployIisAppPath -eq $null){$deployIisAppPath = '' }    
 
     #unit tests
     if ( $MSTestLocation -eq $null) { $MSTestLocation = '' }
@@ -74,7 +72,7 @@ task -name ValidateConfigs -depends  ListConfigs   -description "Validates that 
  
     assert( 'debug', 'release' -contains $msBuildConfig) `
     "Invalid msBuildConfig: $msBuildConfig, must be: 'debug' or 'release'"
-  assert( 'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag', 'diagnostic' -contains $msBuildVerbosity) `
+    assert( 'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag', 'diagnostic' -contains $msBuildVerbosity) `
     "Invalid msBuildVerbosity: $msBuildVerbosity, must be:  'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag' or 'diagnostic'"
     assert( $solutionLocation -ne $null -and $solutionLocation -ne '') `
     "solutionLocation is blank"
@@ -167,11 +165,9 @@ task -name Rebuild -depends Clean, Build -description "Cleans and builds the sol
 
 task -name UnitTest -depends Rebuild -description "Runs unit tests" -action { 
     exec  {
-   & $MSTestLocation  /testcontainer:$testDLLLocation
+        & $MSTestLocation  /testcontainer:$testDLLLocation
     }
 };
-
-
 
 task -name PackageZip -depends UnitTest -description "Makes a zip package" -action { 
     exec  {
@@ -181,9 +177,10 @@ task -name PackageZip -depends UnitTest -description "Makes a zip package" -acti
 
 task -name MigrateDB -depends UnitTest   -description "Runs migration of database" -action { 
     exec  {
-
+    
         Copy-Item  $migrateExeLocation $migrationProjectBinLocation
-
+        
+        # TODO: WRAP IN TRY/ CATCH
         & $removeMigrateLoation $migrateApplicationDLL /connectionString="$migrateConnectionString" /connectionProviderName="System.Data.SqlClient" $migrateDBParams
       
         Remove-Item $removeMigrateLoation
@@ -207,7 +204,7 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
                     /P:Password=$msDeployPassword `
                     /p:DeployIisAppPath=$deployIisAppPath  `
                     /verbosity:$msBuildVerbosity `
-		    /nologo
+		            /nologo
 
         }
         else 
@@ -222,11 +219,8 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
 task -name Pullcode  -description "Tests the code before pushing it to GitHub" -action {
 
 exec {
-git pull
-
-
+    git pull
 }
-
 
 };
 
@@ -241,9 +235,10 @@ exec {
 };
 
 task -name WaitingVideo -description "Loads YouTube waiting video" -action {
-exec {
-    Write-Host "Starting..."
-}
+ 
+
+    Write-Host "Resetting..."
+ 
 }
 
 

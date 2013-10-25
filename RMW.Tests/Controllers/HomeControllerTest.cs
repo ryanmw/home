@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Web;
+using System.Web.Mvc;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Web.Mvc;
-using RMW.Models;
+using RMW.Repository;
 using RMW.Web.Controllers;
 
-
-namespace RMW.Tests.Controllers
+namespace RMW.Web.UnitTests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
@@ -65,7 +63,6 @@ namespace RMW.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
-
 
         [TestMethod]
         public void Contact_IsRequested_IsNotNull()

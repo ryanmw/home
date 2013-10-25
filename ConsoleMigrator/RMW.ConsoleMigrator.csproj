@@ -7,8 +7,8 @@
     <ProjectGuid>{44379FB7-223E-4DFE-8858-C43F085BE451}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsoleMigrator</RootNamespace>
-    <AssemblyName>ConsoleMigrator</AssemblyName>
+    <RootNamespace>RMW.ConsoleMigrator</RootNamespace>
+    <AssemblyName>RMW.ConsoleMigrator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

@@ -1,36 +1,38 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RMW.Web.Controllers;
 
-namespace RMW.Tests.Controllers
+namespace RMW.Web.UnitTests.Controllers
 {
-    ////[TestClass]
-    ////public class ArticlesControllerTest
-    ////{
-    ////    [TestMethod]
-    ////    public void Index()
-    ////    {
-    ////        // Arrange
-    ////        ArticlesController controller = new ArticlesController();
+    [TestClass]
+    public class ArticlesControllerTest
+    {
+        [Ignore]
+        [TestMethod]
+        public void Index()
+        {
+            // Arrange
+            var controller = new ArticlesController();
 
-    ////        // Act
-    ////        ActionResult result = controller.Index() as ActionResult;
+            // Act
+            var result = controller.Index() as ActionResult;
 
-    ////        // Assert
-    ////        Assert.IsNotNull(result);
-    ////    }
+            // Assert
+            Assert.IsNotNull(result);
+        }
 
+        [Ignore]
+        [TestMethod]
+        public void Admin()
+        {
+            // Arrange
+            var controller = new ArticlesController();
 
-        //[TestMethod]
-        //public void Admin()
-        //{
-        //    // Arrange
-        //    ArticlesController controller = new ArticlesController();
+            // Act
+            var result = controller.Admin();
 
-        //    // Act
-        //    ViewResult result = controller.Admin() as ViewResult;
-
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //}
-    //}
+            // Assert
+            Assert.IsNotNull(result);
+        }
+    }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace ConsoleMigrator
+namespace RMW.ConsoleMigrator
 {
     class Program
     {
-        private const string Argmument = @"RMW.dll /connectionString=""{0}"" /connectionProviderName=""System.Data.SqlClient"" /verbose";
+        private const string Argmument = @"RMW.Models.dll /connectionString=""{0}"" /connectionProviderName=""System.Data.SqlClient"" /verbose";
         private const string DbCon = "";
 
         public static void Main(params string[] args)

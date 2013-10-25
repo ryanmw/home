@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using RMW.Models;
+using RMW.Repository;
 
 namespace RMW.Web.Controllers
 {   

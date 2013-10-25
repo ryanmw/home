@@ -9,8 +9,8 @@
     <ProjectGuid>{C7EFF79E-E33A-4DD4-8F7A-87AC67EA8150}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RMW.Tests</RootNamespace>
-    <AssemblyName>RMW.Tests</AssemblyName>
+    <RootNamespace>RMW.Web.UnitTests</RootNamespace>
+    <AssemblyName>RMW.Web.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -113,6 +113,10 @@
     <ProjectReference Include="..\RMW.Models\RMW.Models.csproj">
       <Project>{eb4cdc20-f632-4b15-b9fc-ba51c78e1ea1}</Project>
       <Name>RMW.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMW.Repository\RMW.Repository.csproj">
+      <Project>{9d23256a-bcf3-4eba-ad79-e1005a2f8828}</Project>
+      <Name>RMW.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMW.Web\RMW.Web.csproj">
       <Project>{39f44c7f-4b70-495e-9e63-3ce8f049f9c3}</Project>

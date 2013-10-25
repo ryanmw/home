@@ -745,6 +745,10 @@
       <Project>{eb4cdc20-f632-4b15-b9fc-ba51c78e1ea1}</Project>
       <Name>RMW.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMW.Repository\RMW.Repository.csproj">
+      <Project>{9d23256a-bcf3-4eba-ad79-e1005a2f8828}</Project>
+      <Name>RMW.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

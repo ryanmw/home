@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RMW {
+namespace RMW.Web {
     
     
     public partial class Sitemap {

@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Xml;
 using RMW.Models;
 using RMW.Repository;
 
-namespace RMW
+namespace RMW.Web
 {
     public partial class Sitemap : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string domainRoot = "http://ryanmichaelwilliams.com";
+            const string domainRoot = "http://ryanmichaelwilliams.com";
 
             Response.Clear();
             Response.ContentType = "text/xml";
 
-            XmlTextWriter writer = new XmlTextWriter(Response.OutputStream, Encoding.UTF8);
+            var writer = new XmlTextWriter(Response.OutputStream, Encoding.UTF8);
 
             writer.WriteStartDocument();
             writer.WriteStartElement("urlset");
@@ -83,7 +78,7 @@ namespace RMW
             writer.WriteString("\r\n");
 
             // articles
-            ArticleRepository articles = new ArticleRepository();
+            var articles = new ArticleRepository();
  
             foreach (Article ar1 in articles.All)
             {

@@ -5,14 +5,25 @@
 }
 
 <h1>@Model.Title</h1>
-<i>Published: @Model.CreatedOn.ToString("yyyy-MM-dd")</i> | By:  <a class="h_img" href="https://plus.google.com/u/0/102203432508719579575?rel=author" target="_blank">Ryan Williams</a>
+<i>Published: @Model.CreatedOn.ToString("yyyy-MM-dd")</i> | By:  
+<a class="h_img" href="https://plus.google.com/u/0/102203432508719579575?rel=author" target="_blank">Ryan Williams</a>
+ 
+
 <hr />
 @Html.Raw(Model.Body)
 <br />
 <hr />
 <a name="comments"></a>
 
-
+              <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- RMW : 300x250 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-5003120351442332"
+     data-ad-slot="2012639399"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 @if (Model.Comments != null && Model.Comments.Count > 0)
 {

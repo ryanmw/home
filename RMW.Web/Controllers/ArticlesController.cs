@@ -1,6 +1,8 @@
 using System;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using RMW.Models;
 using RMW.Operational;
 using RMW.Repository;
@@ -16,7 +18,9 @@ namespace RMW.Web.Controllers
 
         private readonly ICommentRepository _commentRepository;
 
-        private readonly HttpContextBase _httpContext; 
+        private readonly HttpContextBase _httpContext;
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         // If you are using Dependency Injection, you can delete the following constructor
         public ArticlesController()
@@ -34,6 +38,7 @@ namespace RMW.Web.Controllers
             this._httpContext        = baseContext;
             this._articleRepository = articleRepository;
             this._commentRepository = commentRepository;
+            log4net.Config.XmlConfigurator.Configure();
         }
 
         //
@@ -72,6 +77,10 @@ namespace RMW.Web.Controllers
 
         public ViewResult Display(string yyyy, string mm, string dd, string key)
         {
+
+
+            Log.Info("Application Started");
+
             return View(_articleRepository.Find(key));
         }
 

@@ -1,7 +1,9 @@
-﻿using System.Web;
+﻿using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using log4net;
 
 namespace RMW.Web
 {
@@ -10,7 +12,7 @@ namespace RMW.Web
 
     public class MvcApplication : HttpApplication
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
 
         protected void Application_Start()
@@ -18,7 +20,7 @@ namespace RMW.Web
             log4net.Config.XmlConfigurator.Configure();
 
             Log.Info("Application Started");
-
+         
             AreaRegistration.RegisterAllAreas();
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

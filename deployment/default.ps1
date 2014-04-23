@@ -8,6 +8,7 @@ properties {
     if ( $msBuildConfig -eq $null){$msBuildConfig = 'debug'}
     if ( $msBuildVerbosity -eq $null){$msBuildVerbosity = 'normal'}
     if ( $solutionLocation -eq $null){$solutionLocation = '' }
+    if ( $msBuildLocation -eq $null) {$msBuildLocation = "C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"} #VS2013
      
     #DB migrations
     if ( $migrateConnectionString -eq $null){$migrateConnectionString = ''}
@@ -150,14 +151,14 @@ task -name ListConfigs -description "Lists configs"   -action {
 
 task -name Build -description "Build the solution" -depends ValidateConfigs, ListConfigs -action { 
     exec  {
-        msbuild $solutionLocation /t:build /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig /nologo
+        & $msBuildLocation $solutionLocation /t:build /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig /nologo
     }
 };
 
 task -name Clean -description "Cleans the solution" -depends ValidateConfigs -action { 
     exec  {
     
-        msbuild $solutionLocation /t:clean /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig /nologo
+        & $msBuildLocation $solutionLocation /t:clean /verbosity:$msBuildVerbosity /p:configuration=$msBuildConfig /nologo
     }
 };
 
@@ -171,7 +172,7 @@ task -name UnitTest -depends Rebuild -description "Runs unit tests" -action {
 
 task -name PackageZip -depends UnitTest -description "Makes a zip package" -action { 
     exec  {
-     msbuild $webProjectLocation /t:Package /verbosity:$msBuildVerbosity /p:Configuration=$msBuildConfig /p:OutDir=$packageOutputDir /nologo
+     & $msBuildLocation $webProjectLocation /t:Package /verbosity:$msBuildVerbosity /p:Configuration=$msBuildConfig /p:OutDir=$packageOutputDir /nologo
   }
 };
 
@@ -192,7 +193,7 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
     exec  {
         if ( $msBuildConfig -eq 'release') {
            
-                msbuild $webprojectLocation `
+                    & $msBuildLocation $webprojectLocation `
                     /p:Configuration=$msBuildConfig `
                     /P:DeployOnBuild=True `
                     /P:DeployTarget=MSDeployPublish `
@@ -203,8 +204,9 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
                     /P:UserName=$msDeployUserName `
                     /P:Password=$msDeployPassword `
                     /p:DeployIisAppPath=$deployIisAppPath  `
-                    /verbosity:$msBuildVerbosity `
-		            /nologo
+                    /p:VisualStudioVersion=12.0 `
+                    /p:ToolVersion=12.0 `
+                    /verbosity:m /nologo
 
         }
         else 

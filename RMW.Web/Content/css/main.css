@@ -549,10 +549,8 @@ nav li a:active
   text-shadow:none;
 }
 
-.active_menu
-{
-    
-    background-color:#252525;
+.active_menu {
+    background-color: #525252;
 }
 
 
@@ -706,3 +704,4 @@ a.h_img:hover img
 
 .home_title { color: #ffffff; text-decoration: none;text-shadow: 1px 1px #696969;margin-bottom:0;}
 .no_margin { margin: 0;}
+

@@ -7,8 +7,8 @@ properties {
     #msbuild
     if ( $msBuildConfig -eq $null){$msBuildConfig = 'debug'}
     if ( $msBuildVerbosity -eq $null){$msBuildVerbosity = 'normal'}
-    if ( $solutionLocation -eq $null){$solutionLocation = '' }
-    if ( $msBuildLocation -eq $null) {$msBuildLocation = "C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"} #VS2013
+    if ( $solutionLocation -eq $null){$solutionLocation = '..\RMW.sln' }
+    if ( $msBuildLocation -eq $null) {$msBuildLocation = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"}
      
     #DB migrations
     if ( $migrateConnectionString -eq $null){$migrateConnectionString = ''}
@@ -21,7 +21,6 @@ properties {
     if ( $migrationProjectBinLocation -eq $null) { $migrationProjectBinLocation = ''}    
   
     #Package
-    if ( $packageName -eq $null){ $packageName = ''}
     if ( $packageOutputDir -eq $null) { $packageOutputDir =  '.\buildartifacts\' }
      
     #Deployment
@@ -77,20 +76,25 @@ task -name ValidateConfigs -depends  ListConfigs   -description "Validates that 
     "Invalid msBuildVerbosity: $msBuildVerbosity, must be:  'q', 'quiet', 'm', 'minimal', 'n', 'normal', 'd', 'detailed', 'diag' or 'diagnostic'"
     assert( $solutionLocation -ne $null -and $solutionLocation -ne '') `
     "solutionLocation is blank"
-    assert( $migrateConnectionString -ne $null -and $migrateConnectionString -ne '') `
-    "migrateConnectionString is blank"
+    
+    #assert( $migrateConnectionString -ne $null -and $migrateConnectionString -ne '') `
+    #"migrateConnectionString is blank"
+    
     assert( $migrateDBParams -ne $null -and $migrateDBParams -ne '') `
     "migrateDBParams is blank"
-    assert( $migrateApplicationDLL -ne $null -and $migrateApplicationDLL -ne '') `
-    "migrateApplicationDLL is blank"
-    assert( $migrateExeLocation -ne $null -and $migrateExeLocation -ne '') `
-    "migrateExeLocation is blank"
-    assert( $dbUpdate -ne $null -and $dbUpdate -ne '') `
-    "dbUpdate is blank"
-    assert( $webprojectBinLocation -ne $null -and $webprojectBinLocation -ne '') `
-    "webprojectBinLocation is blank"
-    assert( $packageName -ne $null -and $packageName -ne '') `
-    "packageName is blank"
+    
+    #assert( $migrateApplicationDLL -ne $null -and $migrateApplicationDLL -ne '') `
+    #"migrateApplicationDLL is blank"
+   
+    #assert( $migrateExeLocation -ne $null -and $migrateExeLocation -ne '') `
+    #"migrateExeLocation is blank"
+
+    # assert( $dbUpdate -ne $null -and $dbUpdate -ne '') `
+    # "dbUpdate is blank"
+
+    #assert( $webprojectBinLocation -ne $null -and $webprojectBinLocation -ne '') `
+    #"webprojectBinLocation is blank"
+
     assert( $packageOutputDir -ne $null -and $packageOutputDir -ne '') `
     "packageOutputDir is blank"
     assert( $msDeployURL -ne $null -and $msDeployURL -ne '') `
@@ -131,7 +135,7 @@ task -name ListConfigs -description "Lists configs"   -action {
        Write-Host '$migrateExeLocation = ' $migrateExeLocation -ForegroundColor Magenta
        Write-Host '$removeMigrateLoation = ' $removeMigrateLoation -ForegroundColor Magenta
        Write-Host '$dbUpdate = ' $dbUpdate -ForegroundColor Magenta
-       Write-Host '$webprojectBinLocation = ' $webprojectBinLocation -ForegroundColor Magenta
+       #Write-Host '$webprojectBinLocation = ' $webprojectBinLocation -ForegroundColor Magenta
        Write-Host '$packageName = ' $packageName -ForegroundColor Magenta
        Write-Host '$packageOutputDir = ' $packageOutputDir -ForegroundColor Magenta
        Write-Host '$msDeployURL = ' $msDeployURL -ForegroundColor Magenta
@@ -204,8 +208,8 @@ task -name DeployPackage -depends PackageZip, MigrateDB -description "Deploys pa
                     /P:UserName=$msDeployUserName `
                     /P:Password=$msDeployPassword `
                     /p:DeployIisAppPath=$deployIisAppPath  `
-                    /p:VisualStudioVersion=12.0 `
-                    /p:ToolVersion=12.0 `
+                    /p:VisualStudioVersion=15.0 `
+                    /p:ToolVersion=15.0 `
                     /verbosity:m /nologo
 
         }

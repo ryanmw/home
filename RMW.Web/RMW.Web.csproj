@@ -268,7 +268,6 @@
     <Content Include="Scripts\ckeditor\ckeditor.asp" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
-    <Content Include="Content\docs\resume_2012-11-27.pdf" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />
     <Content Include="Scripts\ckeditor\ckeditor_basic.js" />
     <Content Include="Scripts\ckeditor\ckeditor_basic_source.js" />
@@ -622,7 +621,8 @@
     <Content Include="Scripts\ckeditor\skins\v2\skin.js" />
     <Content Include="Scripts\ckeditor\skins\v2\templates.css" />
     <Content Include="Scripts\ckeditor\themes\default\theme.js" />
-    <Content Include="Content\docs\rmw_resume_2013-08-05.pdf" />
+    <Content Include="Content\docs\resume_ryan-williams_2017-04-27.doc" />
+    <Content Include="Content\docs\resume_ryan-williams_2017-04-27.pdf" />
     <None Include="Properties\PublishProfiles\prod.pubxml" />
     <None Include="Properties\PublishProfiles\ryanmichaelwilliams.com - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ryanmichaelwilliams.com - Web Deploy.pubxml" />
@@ -677,9 +677,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

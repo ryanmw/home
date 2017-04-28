@@ -43,19 +43,13 @@
 
     for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++)
     {
-        if (string.IsNullOrEmpty(Request.QueryString["page"]) && pageNumber == 1)
+        if (ViewBag.CurrentPage == pageNumber)
         {
-    @pageNumber     
-        }
-        else if (!string.IsNullOrEmpty(Request.QueryString["page"]) &&
-            pageNumber == Convert.ToInt32(Request.QueryString["page"])
-            )
-        {
-    @pageNumber 
+            @pageNumber 
         }
         else
         {
-    <a href="@Url.Content("~/articles/?" + "page" + "=" + pageNumber.ToString())">@pageNumber.ToString()</a>  
+            <a href="@Url.Content("~/articles/page/" + pageNumber.ToString())">@pageNumber.ToString()</a>  
         }
     }
     

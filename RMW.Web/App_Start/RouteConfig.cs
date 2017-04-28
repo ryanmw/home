@@ -16,6 +16,12 @@ namespace RMW
             );
 
             routes.MapRoute(
+                 "ArticlePage",
+                 "articles/page/{pageNumber}",
+                new { controller = "Articles", action = "Page" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

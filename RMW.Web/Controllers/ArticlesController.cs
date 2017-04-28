@@ -41,18 +41,27 @@ namespace RMW.Web.Controllers
             log4net.Config.XmlConfigurator.Configure();
         }
 
-        //
-        // GET: /Articles/
 
+        [HttpGet]
         public ViewResult Index()
         {
             var currentPage = 1;
 
-            if (!int.TryParse(_httpContext.Request.QueryString["page"], out currentPage)) currentPage = 1;
+            ViewBag.CurrentPage = currentPage;
 
             var articleList = _articleRepository.GetsArticles(currentPage, PageSize);
  
             return View(articleList);
+        }
+
+        [HttpGet]
+        public ViewResult Page(int pageNumber = 1)
+        {
+            var articleList = _articleRepository.GetsArticles(pageNumber, PageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+
+            return View("Index", articleList);
         }
 
         [Authorize]
@@ -67,20 +76,14 @@ namespace RMW.Web.Controllers
             return View(articleList);
         }
 
-        //
-        // GET: /Articles/Details/5
-
         public ViewResult Details(int id)
         {
             return View(_articleRepository.Find(id));
         }
 
+        [HttpGet]
         public ViewResult Display(string yyyy, string mm, string dd, string key)
         {
-
-
-            Log.Info("Application Started");
-
             return View(_articleRepository.Find(key));
         }
 
@@ -108,16 +111,12 @@ namespace RMW.Web.Controllers
             return new EmptyResult();
         }
 
-        //
-        // GET: /Articles/Create
         [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Articles/Create
         [Authorize]
         [HttpPost]
         [ValidateInput(false)]
@@ -136,16 +135,12 @@ namespace RMW.Web.Controllers
             return RedirectToAction("Admin");
         }
 
-        //
-        // GET: /Articles/Edit/5
         [Authorize]
         public ActionResult Edit(int id)
         {
             return View(_articleRepository.Find(id));
         }
 
-        //
-        // POST: /Articles/Edit/5
         [Authorize]
         [HttpPost]
         [ValidateInput(false)]
@@ -171,16 +166,12 @@ namespace RMW.Web.Controllers
             return RedirectToAction("Admin");
         }
 
-        //
-        // GET: /Articles/Delete/5
         [Authorize]
         public ActionResult Delete(int id)
         {
             return View(_articleRepository.Find(id));
         }
 
-        //
-        // POST: /Articles/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

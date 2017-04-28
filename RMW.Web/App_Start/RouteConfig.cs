@@ -9,12 +9,13 @@ namespace RMW
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                  "ArticleItem",
                  "articles/{yyyy}/{mm}/{dd}/{key}"  ,
                 new { controller = "Articles", action = "Display" }
             );
-
 
             routes.MapRoute(
                 name: "Default",

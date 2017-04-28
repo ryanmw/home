@@ -11,7 +11,7 @@ namespace RMW.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            const string domainRoot = "http://ryanwilliams.io";
+            var domainRoot = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Host);
 
             Response.Clear();
             Response.ContentType = "text/xml";
@@ -22,15 +22,6 @@ namespace RMW.Web
             writer.WriteStartElement("urlset");
             writer.WriteAttributeString("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
             writer.WriteString("\r\n");    
-
-            // home
-            writer.WriteStartElement("url");
-            writer.WriteElementString("loc", domainRoot);
-            writer.WriteElementString("lastmod", String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", DateTime.UtcNow));
-            writer.WriteElementString("changefreq", "weekly");
-            writer.WriteElementString("priority", "1.0");
-            writer.WriteEndElement();
-            writer.WriteString("\r\n");
 
             // about
             writer.WriteStartElement("url");

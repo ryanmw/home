@@ -10,7 +10,7 @@ using RMW.Web.Controllers;
 namespace RMW.Web.UnitTests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class HomeControllerTests
     {
         [TestMethod]
         public void Index_IsRequested_IsNotNull()
@@ -50,31 +50,6 @@ namespace RMW.Web.UnitTests.Controllers
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
-
-        [TestMethod]
-        public void About_IsRequested_IsNotNull()
-        {
-            // Arrange
-            var controller = new HomeController();
-
-            // Act
-            var result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void Contact_IsRequested_IsNotNull()
-        {
-            // Arrange
-            var controller = new HomeController();
-
-            // Act
-            var result = controller.Contact();
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
+        
     }
 }

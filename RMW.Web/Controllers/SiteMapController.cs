@@ -22,17 +22,13 @@ namespace RMW.Web.Controllers
                 siteMapHelper.AddUrl(url.ToString(), DateTime.UtcNow.AddDays(-1), ChangeFrequency.weekly, .5);
             }
 
-            siteMapHelper.AddUrl(domainRoot + "/home/about", DateTime.UtcNow, ChangeFrequency.monthly, .7);
-            siteMapHelper.AddUrl(domainRoot + "/home/resume", DateTime.UtcNow, ChangeFrequency.monthly, .7);
-            siteMapHelper.AddUrl(domainRoot + "/home/contact", DateTime.UtcNow, ChangeFrequency.monthly, .7);
+            siteMapHelper.AddUrl(domainRoot + "/resume", DateTime.UtcNow, ChangeFrequency.monthly, .7);
+            siteMapHelper.AddUrl(domainRoot + "/contact", DateTime.UtcNow, ChangeFrequency.monthly, .7);
             siteMapHelper.AddUrl(domainRoot + "/articles", DateTime.UtcNow, ChangeFrequency.monthly, .7);
-            siteMapHelper.AddUrl(domainRoot + "/home/about", DateTime.UtcNow, ChangeFrequency.monthly, .7);
 
             var xml = siteMapHelper.GenerateXml();
 
             return this.Content(xml, "text/xml");
         }
-
- 
     }
 }

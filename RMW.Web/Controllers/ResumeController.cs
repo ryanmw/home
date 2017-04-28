@@ -2,11 +2,12 @@
 
 namespace RMW.Web.Controllers
 {
-    public class HomeController : Controller
+    public class ResumeController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Articles");
+            return View();
         }
     }
 }

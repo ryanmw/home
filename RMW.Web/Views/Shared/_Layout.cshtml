@@ -48,30 +48,28 @@
 
 
 
-                             @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "home" &&
-                            ViewContext.RouteData.Values["action"].ToString().ToLower() == "resume"))
+                             @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "resume"))
                        {
              
                             
-                                    <li>@Html.ActionLink("Résumé", "Resume", "Home", null, new { @class="shadowing active_menu" })</li>
+                                    <li>@Html.ActionLink("Résumé", "Index", "Resume", null, new { @class="shadowing active_menu" })</li>
                        }
                     else 
                     {
-                       <li>@Html.ActionLink("Résumé", "Resume", "Home", null, new { @class="shadowing" })</li>
+                       <li>@Html.ActionLink("Résumé", "Index", "Resume", null, new { @class="shadowing" })</li>
                        }
 
                 
 
                     
-                       @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "contact" &&
-                            ViewContext.RouteData.Values["action"].ToString().ToLower() == "contact"))
+                       @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "contact"))
                        {
              
-                             <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class="shadowing active_menu" })</li>   
+                             <li>@Html.ActionLink("Contact", "Index", "Contact", null, new { @class="shadowing active_menu" })</li>   
                        }
                     else 
                     {
-                           <li>@Html.ActionLink("Contact", "Contact", "Home",  null, new { @class="shadowing" })</li>   
+                           <li>@Html.ActionLink("Contact", "Index", "Contact",  null, new { @class="shadowing" })</li>   
                     }
                  
 

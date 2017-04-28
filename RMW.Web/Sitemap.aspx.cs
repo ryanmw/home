@@ -11,7 +11,7 @@ namespace RMW.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            const string domainRoot = "http://ryanmichaelwilliams.com";
+            const string domainRoot = "http://ryanwilliams.io";
 
             Response.Clear();
             Response.ContentType = "text/xml";

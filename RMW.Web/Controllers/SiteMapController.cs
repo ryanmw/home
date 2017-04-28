@@ -7,8 +7,7 @@ namespace RMW.Web.Controllers
 {
     public class SiteMapController : Controller
     {
-        [Route("/sitemap.xml")]
-        public ActionResult SiteMap()
+        public ActionResult Index()
         {
             var domainRoot = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Host);
 
@@ -18,7 +17,7 @@ namespace RMW.Web.Controllers
 
             foreach (var article in articles.All)
             {
-                var url = new Uri(article.URLTo);
+                var url = new Uri(domainRoot + article.URLTo);
 
                 siteMapHelper.AddUrl(url.ToString(), DateTime.UtcNow.AddDays(-1), ChangeFrequency.weekly, .5);
             }

@@ -125,7 +125,11 @@ task -name BuildProject -description "Build Project"  -action {
 
         cd $webProjectPath
 
+        Write-Host "Restoring..."
         dotnet restore
+
+        Write-Host "Building..."
+        dotnet build
     }
 }
 

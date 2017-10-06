@@ -7,7 +7,7 @@ namespace DevLog.Web.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Articles");
+            return RedirectToAction("Index", "articles");
         }
     }
 }

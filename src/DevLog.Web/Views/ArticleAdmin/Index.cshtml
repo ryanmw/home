@@ -1,0 +1,83 @@
+@model ArticlePageModel
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+     
+        <th>
+            Title
+        </th>
+
+
+        <th>
+            CreatedOn
+        </th>
+
+        <th>
+            URL 
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+
+            <td>
+                @item.Title
+            </td>
+
+
+            <td>
+                @String.Format("{0:g}", item.PublishedOn)
+            </td>
+            
+            <td>
+                <a href="@item.URLTo">Link</a>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId })  
+
+            </td>
+             
+        </tr>
+    }
+
+</table>
+
+
+
+
+@{
+  //  int pageCount = Model.PageCount;
+  //
+  //  for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++)
+  //  {
+  //      if (string.IsNullOrEmpty(Request.QueryString["page"]) && pageNumber == 1)
+  //      {
+  //          @pageNumber
+  //      }
+  //      else if (!string.IsNullOrEmpty(Request.QueryString["page"]) &&
+  //          pageNumber == Convert.ToInt32(Request.QueryString["page"])
+  //          )
+  //      {
+  //          @pageNumber
+  //      }
+  //      else
+  //      {
+  //          <a href="@Url.Content("~/articles/admin?page=" + pageNumber.ToString())">@pageNumber.ToString()</a>
+  //      }
+  //  }
+
+}

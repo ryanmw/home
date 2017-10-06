@@ -1,0 +1,39 @@
+@model EditArticleModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Article</legend>
+
+        @Html.HiddenFor(model => model.ArticleId)
+		@Html.Partial("_CreateOrEdit", Model)
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<ul>
+    <li>COMMENTS:</li>
+
+    @foreach (var comment in Model.Comments)
+    {
+        <li>
+            <p>@comment.CommentDetails</p>
+            <a onclick="return confirm('Delete?')" href="~/articleadmin/deletecomment/?commentId=@comment.CommentId">Delete</a>
+
+        </li>
+    }
+
+</ul>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

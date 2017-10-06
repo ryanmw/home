@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google-site-verification" content="2gJdT5_ahFJOwUV87v3QUaQN6l0AEgjXMxXRkY5DJ24" />
+    <title>RW | @ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.MetaDesc">
+    <meta name="viewport" content="width=device-width">
+    <meta property="og:image" content="~/images/fb_og.jpg" />
+
+     <link rel="icon" href="~/favicon.ico" type='image/x-icon' />
+
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    @*@System.Web.Optimization.Styles.Render("~/Content/css/css_head1")
+
+    @System.Web.Optimization.Scripts.Render( "~/bundles/js_head1")*@
+    <script src="~/js/vendor/modernizr-2.6.1-respond-1.1.0.js"></script>
+    <!-- last will -->
+</head>
+<body>
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+    <div class="header-container">
+        <header class="wrapper clearfix">
+        
+            <h1 class="title">
+                <a href="~/" >RW</a> </h1>
+            <nav>
+                <ul>
+             
+
+
+                    
+                       @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "articles" &&
+                            ViewContext.RouteData.Values["action"].ToString().ToLower() == "index"))
+                       {
+             
+                               <li>@Html.ActionLink("Articles", "Index", "articles", null, new { @class="shadowing active_menu" })</li> 
+                       }
+                    else 
+                    {
+                             <li>@Html.ActionLink("Articles", "Index", "articles", null, new { @class="shadowing" })</li>
+                       }
+
+
+
+                             @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "resume"))
+                       {
+             
+                            
+                                    <li>@Html.ActionLink("Résumé", "Index", "resume", null, new { @class="shadowing active_menu" })</li>
+                       }
+                    else 
+                    {
+                       <li>@Html.ActionLink("Résumé", "Index", "resume", null, new { @class="shadowing" })</li>
+                       }
+
+                
+
+                    
+                       @if ((ViewContext.RouteData.Values["controller"].ToString().ToLower() == "contact"))
+                       {
+             
+                             <li>@Html.ActionLink("Contact", "Index", "contact", null, new { @class="shadowing active_menu" })</li>   
+                       }
+                    else 
+                    {
+                           <li>@Html.ActionLink("Contact", "Index", "contact",  null, new { @class="shadowing" })</li>   
+                    }
+                 
+
+                 
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <div class="main-container">
+        <div class="main wrapper clearfix">
+            @RenderSection("featured", required: false)
+            <article>
+               
+                <section>
+                    @RenderBody()
+
+                </section>
+              
+            </article>
+
+            <aside>
+                <div class="side_bg">
+         
+                    <h2 class="home_title">Ryan Williams</h2>
+                    <p class="no_margin"><b>.NET Software Engineer</b></p>
+                    <img src="~/images/me.jpg" style="height: 150px;" alt="Ryan Williams" title="Ryan Williams" />
+                  
+                    <p>
+                        <b>Location:</b>
+                        San Francisco, California
+                        <img src="~/images/US_small.png" />
+                    </p>
+                    <hr />
+
+                    <p>
+                        <b>Specialization:</b>
+                        <ul>
+                            <li>ASP.NET/ C#</li>
+                            <li>Azure</li>
+                            <li>SQL Server</li>
+                            <li>HTML5, CSS, JavaScript</li>
+
+
+                        </ul>
+                    </p>
+  
+                    <hr />
+                    
+                    <p>
+                        <b>Open Source Code:</b>
+                        <ul>
+                            <li><a target="_blank" href="https://github.com/ryn0">My GitHub Profile</a>  </li>
+                            <li><a target="_blank" href="https://github.com/ryn0/home">This Website</a>  </li>
+                        </ul>
+                    </p> 
+        
+                </div>
+            </aside>
+            
+            <aside style="margin-top:20px;">
+                <h4>Advertisement</h4>
+             
+                
+                <div style="text-align:center;">
+                    <script type="text/javascript">
+                        amzn_assoc_ad_type = "banner";
+                        amzn_assoc_marketplace = "amazon";
+                        amzn_assoc_region = "US";
+                        amzn_assoc_placement = "assoc_banner_placement_default";
+                        amzn_assoc_banner_type = "ez";
+                        amzn_assoc_p = "9";
+                        amzn_assoc_width = "180";
+                        amzn_assoc_height = "150";
+                        amzn_assoc_tracking_id = "dkm543-20";
+                        amzn_assoc_linkid = "844c47524044abfe9765d19c2ff341ad";
+                    </script>
+                    <script src="//z-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1"></script>
+                </div>
+               
+            </aside>
+        </div>
+        <!-- #main -->
+    </div>
+    <!-- #main-container -->
+
+    <div class="footer-container">
+ 
+
+          <footer class="wrapper">
+                    <p>&copy; @DateTime.Now.Year - Ryan Williams  @Html.Partial("_LoginPartial") </p> 
+                </footer>
+    </div>
+     
+
+    <script>
+                        (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+                        ga('create', 'UA-1180027-9', 'auto');
+                        ga('send', 'pageview');
+
+    </script>
+
+
+       @RenderSection("scripts", required: false)
+
+</body>
+</html>

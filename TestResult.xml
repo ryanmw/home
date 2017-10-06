@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!--This file represents the results of running a test suite-->
-<test-results name="D:\repos\ryanmichaelwilliams\home\rmw.tests\bin\debug\RMW.Tests.dll" total="0" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-03-16" time="12:52:31">
-  <environment nunit-version="2.6.1.12217" clr-version="2.0.50727.5466" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="D:\repos\ryanmichaelwilliams\home" machine-name="W_LAPTOP-PC" user="W_Laptop" user-domain="W_Laptop-PC" />
-  <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="D:\repos\ryanmichaelwilliams\home\rmw.tests\bin\debug\RMW.Tests.dll" executed="True" result="Inconclusive" success="False" time="0.033" asserts="0" />
-</test-results>

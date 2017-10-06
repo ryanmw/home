@@ -1,0 +1,25 @@
+﻿ @using Microsoft.AspNetCore.Identity
+@using DevLog.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <ul>
+        <li>
+            <a href="~/account/logoff">Log off</a>
+        </li>
+        <li>
+            <a href="~/articleadmin"> Admin Articles </a>
+        </li>
+        <li>
+
+            <a href="~/admin">Admin Home</a>
+
+        </li>
+    </ul>
+   
+
+
+}

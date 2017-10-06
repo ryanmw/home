@@ -13,7 +13,7 @@ properties {
    # Project paths
    $databaseProjectSourcePath   = "..\src\DevLog.Data"
    $webProjectSourcePath        = "..\src\DevLog.Web"
-   $testWebProjectSourcePath        = "..\src\DevLog.Web.UnitTests"
+   $testWebProjectSourcePath        = "..\DevLog.Web.UnitTests"
    $compileSourcePath           = "..\src\DevLog.Web\bin\output"
 
    # Credentials
@@ -59,7 +59,9 @@ task -name CreatePackage {
 task -name RunUnitTests {
 
     exec {
-        dotnet test $testWebProjectSourcePath
+        $path = Resolve-Path -Path $testWebProjectSourcePath
+        Write-Host "Test project: $path"
+        dotnet test $path
     }
 }
 

@@ -10,6 +10,8 @@ namespace DevLog.Web.Models
         public List<ArticlePageItemModel> Items { get; set; } = new List<ArticlePageItemModel>();
 
         public int PageCount { get; set; }
+
+        public int PageNumber { get; set; }
     }
 
     public class ArticlePageItemModel

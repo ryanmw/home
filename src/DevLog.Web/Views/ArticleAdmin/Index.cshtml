@@ -56,28 +56,23 @@
 
 </table>
 
+ 
 
 
 
 @{
-  //  int pageCount = Model.PageCount;
-  //
-  //  for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++)
-  //  {
-  //      if (string.IsNullOrEmpty(Request.QueryString["page"]) && pageNumber == 1)
-  //      {
-  //          @pageNumber
-  //      }
-  //      else if (!string.IsNullOrEmpty(Request.QueryString["page"]) &&
-  //          pageNumber == Convert.ToInt32(Request.QueryString["page"])
-  //          )
-  //      {
-  //          @pageNumber
-  //      }
-  //      else
-  //      {
-  //          <a href="@Url.Content("~/articles/admin?page=" + pageNumber.ToString())">@pageNumber.ToString()</a>
-  //      }
-  //  }
+    int pageCount = Model.PageCount;
+
+    for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++)
+    {
+        if (Model.PageNumber == pageNumber)
+        {
+            @pageNumber
+        }
+        else
+        {
+            <a href="@Url.Content("~/articleadmin/page/" + pageNumber.ToString())">@pageNumber.ToString()</a>
+        }
+    }
 
 }

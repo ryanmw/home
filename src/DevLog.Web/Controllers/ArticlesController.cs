@@ -31,13 +31,17 @@ namespace DevLog.Web.Controllers
             return Page(1);
         }
 
+        [Route("articles/page/{pageNumber}")]
         [HttpGet]
         public ViewResult Page(int pageNumber = 1)
         {
-            int total;
-            var articleList = _articleRepository.GetArticles(pageNumber, PageSize, out total);
+            var articleList = _articleRepository.GetArticles(pageNumber, PageSize, out int total);
 
-            var model = new ArticlePageModel();
+            var model = new ArticlePageModel()
+            {
+                PageNumber = pageNumber,
+                PageCount = (total + PageSize - 1) / PageSize
+            };
             
             foreach(var article in articleList)
             {

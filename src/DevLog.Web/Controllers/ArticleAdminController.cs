@@ -32,19 +32,24 @@ namespace DevLog.Web.Controllers
             _articleRepository = articleRepository;
             _commentRepository = commentRepository;
         }
-        
-    
-        [HttpGet]
+
+
         public IActionResult Index(int currentPage = 1)
         {
-            int total;
-            int pageNumber = 1;
+            return Page(1);
+        }
 
-            if (!int.TryParse(Request.Query["page"], out currentPage)) currentPage = 1;
+        [Route("articleadmin/page/{currentPage}")]
+        [HttpGet]
+        public IActionResult Page(int currentPage = 1)
+        {
+            var articleList = _articleRepository.GetArticles(currentPage, PageSize, out int total);
 
-            var articleList = _articleRepository.GetArticles(pageNumber, PageSize, out total);
-
-            var model = new ArticlePageModel();
+            var model = new ArticlePageModel()
+            {
+                PageNumber = currentPage,
+                PageCount = (total + PageSize - 1) / PageSize
+            };
 
             foreach (var article in articleList)
             {
@@ -58,7 +63,7 @@ namespace DevLog.Web.Controllers
                 });
             }
 
-            return View(model);
+            return View("Index", model);
         }
 
         [HttpGet]

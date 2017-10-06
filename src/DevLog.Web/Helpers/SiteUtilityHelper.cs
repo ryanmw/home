@@ -16,7 +16,13 @@ namespace DevLog.Web.Helpers
         public static string WebSafeMaker(string p)
         {
             var pname = Regex.Replace(p, @"[\W_-[#]]+", " ");
-            return pname.Trim().Replace("  ", " ").Replace(" ", "-").Replace("%", string.Empty).ToLowerInvariant();
+
+            var beforeTrim = pname.Trim().Replace("  ", " ").Replace(" ", "-").Replace("%", string.Empty).ToLowerInvariant();
+
+            if (beforeTrim.EndsWith("#"))
+                return beforeTrim.TrimEnd('#');
+
+            return beforeTrim;
         }
 
 

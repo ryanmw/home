@@ -13,6 +13,7 @@ properties {
    # Project paths
    $databaseProjectSourcePath   = "..\src\DevLog.Data"
    $webProjectSourcePath        = "..\src\DevLog.Web"
+   $testWebProjectSourcePath        = "..\src\DevLog.Web.UnitTests"
    $compileSourcePath           = "..\src\DevLog.Web\bin\output"
 
    # Credentials
@@ -54,6 +55,14 @@ task -name CreatePackage {
     }
 }
 
+
+task -name RunUnitTests {
+
+    exec {
+        dotnet test $testWebProjectSourcePath
+    }
+}
+
 task -name SyncWebFiles {
 
     exec {
@@ -83,7 +92,7 @@ task -name SyncWebFiles {
     }
 }
 
-task -name DeployWebApp -depends RestorePackages, BuildProject, MigrateDB, CreatePackage, SyncWebFiles -action {
+task -name DeployWebApp -depends RestorePackages, BuildProject, RunUnitTests, MigrateDB, CreatePackage, SyncWebFiles -action {
 
     exec {
 

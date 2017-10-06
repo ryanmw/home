@@ -11,16 +11,19 @@ namespace DevLog.Web.Helpers
         /// <summary>
         /// Gets a URL accessible dash spaced string 
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public static string WebSafeMaker(string p)
+        public static string WebSafeMaker(string key)
         {
-            var pname = Regex.Replace(p, @"[\W_-[#]]+", " ");
+            var replaceRegex = Regex.Replace(key, @"[\W_-[#]]+", " ");
 
-            var beforeTrim = pname.Trim().Replace("  ", " ").Replace(" ", "-").Replace("%", string.Empty).ToLowerInvariant();
-
+            var beforeTrim = replaceRegex.Trim().Replace("  ", " ").Replace(" ", "-").Replace("%", string.Empty).ToLowerInvariant();
+          
             if (beforeTrim.EndsWith("#"))
-                return beforeTrim.TrimEnd('#');
+                beforeTrim = beforeTrim.TrimEnd('#');
+
+            if (beforeTrim.StartsWith("#"))
+                beforeTrim = beforeTrim.TrimStart('#');
 
             return beforeTrim;
         }
